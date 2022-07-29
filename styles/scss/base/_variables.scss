@@ -15,4 +15,4 @@ $border-radius: 5px;
 
 $dropdown-border-radius: 0 0 $border-radius $border-radius;
 
-$bootstrap-icons-font-dir: '../../node_modules/bootstrap-icons/font/fonts';
+$bootstrap-icons-font-dir: "../../node_modules/bootstrap-icons/font/fonts" !default;
