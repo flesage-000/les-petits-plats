@@ -40,7 +40,7 @@
 @import '../../node_modules/bootstrap/scss/utilities';
 @import '../../node_modules/bootstrap/scss/print';
 
-@use '../../node_modules/bootstrap-icons/font/bootstrap-icons.scss';
+@import '~/bootstrap-icons/font/bootstrap-icons.scss';
 
 @import './abstract/mixins';
 
