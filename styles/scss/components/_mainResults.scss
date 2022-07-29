@@ -1,0 +1,43 @@
+.results {
+  // Grid generator => https://cssgrid-generator.netlify.app/
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(17, 1fr);
+  grid-column-gap: 50px;
+  grid-row-gap: 50px;
+
+  .card {}
+
+  .card-title {}
+
+  .card-img-top {
+    height: 178px;
+  }
+
+  h5 {
+    @include _font($family: 'Lato', $size: 18px, $lineHeight: 22px, $weight: 400);
+
+    time {
+      @include _font($family: 'Lato', $size: 18px, $lineHeight: 22px, $weight: 700);
+
+      .bi {
+        margin: 0 7px 0 0;
+        -webkit-text-stroke: 1px;
+      }
+    }
+  }
+
+  .recipe {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 20px;
+
+    @include _font($family: 'Lato', $size: 12px, $lineHeight: 14px, $weight: 400);
+
+    ul,
+    p {
+      margin-bottom: 0;
+    }
+  }
+}

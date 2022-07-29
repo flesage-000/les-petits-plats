@@ -1,0 +1,27 @@
+/// Generate Fonts properties
+///
+/// @param {string} $family
+///   The family name to apply.
+/// @param {string} $size
+///   The font size to apply
+/// @param {string} $lineHeight
+///   The line-height to apply
+/// @param {integer} $weight
+///   The font-weight to apply
+@mixin _font($family: false, $size: false, $lineHeight: false, $weight: 400) {
+  @if $family {
+    @if $family == 'Lato' {
+      $family: $family, sans-serif;
+    }
+    font-family: $family;
+  }
+  @if $size {
+    font-size: $size;
+  }
+  @if $lineHeight {
+    line-height: $lineHeight;
+  }
+  @if $weight {
+    font-weight: $weight;
+  }
+}

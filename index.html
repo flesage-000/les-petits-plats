@@ -6,11 +6,164 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Les petits plats</title>
 
-  <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="./node_modules/bootstrap-icons/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="./styles/scss/main.css">
 </head>
 <body>
 
   <div class="container">
+
+    <header class="pageHeader"
+            role="banner">
+      <a  href="index.html"
+          class="pageHeader__link"><img src="./assets/images/logo_les_petits_plats.png"
+                                        class="pageHeader__link__logo"
+                                        alt="Logo de Les petits plats"
+                                        title="Les petits plats"></a>
+    </header>
+
+    <form class="mainSearch">
+      <div class="input-group">
+        <label  for="mainSearch"
+                class="sr-only">Rechercher une recette</label>
+        <input  id="mainSearch"
+                class="form-control form-control-lg bg-mercury border-mercury rounded-left border text-black"
+                type="text"
+                placeholder="Rechercher une recette">
+        <div class="input-group-append">
+          <button type="button"
+                  class="btn bi bi-search bg-mercury text-black"
+                  aria-label="Cliquer pour lancer la recherche"></button>
+        </div>
+      </div>
+    </form>
+
+    <div class="tags">
+      <button class="btn btn-sm btn-primary"
+              type="button"
+              ara-label="Cliquer pour supprimer le tag 'Button'">Tag<i class="bi bi-x-circle"></i></button>
+    </div>
+
+    <div class="dropdowns">
+
+      <div class="input-group">
+
+        <input  type="text"
+                id="searchIngredients"
+                class="form-control text-white rounded-left border bg-blue border-blue"
+                placeholder="Ingredients">
+
+        <div class="input-group-append">
+          <div class="btn-group">
+
+            <button type="button"
+                    class="btn btn-blue dropdown-toggle dropdown-toggle-split rounded-right"
+                    data-toggle="dropdown"
+                    aria-expanded="false">
+              <span class="sr-only">Toggle Dropdown</span>
+            </button>
+
+            <div class="dropdown-menu bg-blue">
+              <a class="dropdown-item text-white bg-blue" href="#">Action</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item text-white bg-blue" href="#">Separated link</a>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="input-group">
+
+        <input  type="text"
+                id="searchDevices"
+                class="form-control text-white rounded-left bg-green border border-green"
+                placeholder="Appareils">
+
+        <div class="input-group-append">
+          <div class="btn-group">
+
+            <button type="button"
+                    class="btn btn-green dropdown-toggle dropdown-toggle-split rounded-right"
+                    data-toggle="dropdown"
+                    aria-expanded="false">
+              <span class="sr-only">Toggle Dropdown</span>
+            </button>
+
+            <div class="dropdown-menu bg-green border-green">
+              <a class="dropdown-item text-white bg-green" href="#">Action</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item text-white bg-green" href="#">Separated link</a>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="input-group">
+
+        <input  type="text"
+                id="searchUstensils"
+                class="form-control text-white rounded-left border bg-red border-red"
+                placeholder="Ustensiles">
+
+        <div class="input-group-append">
+          <div class="btn-group">
+
+            <button type="button"
+                    class="btn btn-red dropdown-toggle dropdown-toggle-split rounded-right"
+                    data-toggle="dropdown"
+                    aria-expanded="false">
+              <span class="sr-only">Toggle Dropdown</span>
+            </button>
+
+            <div class="dropdown-menu bg-red border-red">
+              <a class="dropdown-item text-white bg-red" href="#">Action</a>
+              <a class="dropdown-item text-white bg-red" href="#">Separated link</a>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="results">
+
+      <div class="card">
+        <img src="..." class="card-img-top" alt="...">
+
+        <div class="card-body">
+
+          <h5 class="card-title">Poisson Cru à la tahitienne <time datetime="PT60M" class="text-truncate"><i class="bi bi-clock" aria-label="horloge"></i>60 min</time></h5>
+
+          <div class="recipe">
+            <div class="ingredients">
+              <ul class="list-unstyled">
+                <li><span class="font-weight-bolder">Thon Rouge (ou blanc): </span>200g</li>
+                <li><span class="font-weight-bolder">Concombre: </span>1</li>
+                <li><span class="font-weight-bolder">Tomate: </span>2</li>
+                <li><span class="font-weight-bolder">Carotte: </span>1</li>
+                <li><span class="font-weight-bolder">Citron Vert: </span>5</li>
+                <li><span class="font-weight-bolder">Lait de coco: </span>100ml</li>
+              </ul>
+            </div>
+
+            <div class="preparation">
+              <p>
+                Découper le thon en dés, mettre dans un plat et recouvrir de jus de citron vert (mieux vaut prendre un plat large et peu profond). Laisser reposer au réfrigérateur au moins 2...
+              </p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
 
   </div>
 

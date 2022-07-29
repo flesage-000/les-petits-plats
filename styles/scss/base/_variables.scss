@@ -1,0 +1,16 @@
+// Color name finder => https://colors.artyclick.com/color-name-finder/
+$theme-colors: (
+  "black": #000,
+  "blue": #3282F7,
+  "green": #68D9A4,
+  "mercury": #E7E7E7,
+  "red": #ED6454
+);
+
+$input-placeholder-color: #FFF;
+
+$card-spacer-x: 15px;
+
+$border-radius: 5px;
+
+$dropdown-border-radius: 0 0 $border-radius $border-radius;

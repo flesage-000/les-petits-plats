@@ -1,0 +1,18 @@
+.dropdowns {
+  display: flex;
+
+  .input-group {
+    flex-basis: 170px;
+    margin: 0 20px 25px 0;
+
+    .form-control {
+      padding: 25px 15px 24px;
+
+      @include _font($family: 'Lato', $size: 18px, $lineHeight: 22px, $weight: 700);
+    }
+    .input-group-append .btn-group .btn {
+      border-radius: 0;
+    }
+
+  }
+}
