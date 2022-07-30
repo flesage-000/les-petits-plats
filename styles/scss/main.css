@@ -17483,6 +17483,7 @@ h3 {
 
 .dropdowns {
   display: flex;
+  flex-wrap: wrap;
 }
 .dropdowns .input-group {
   flex-basis: 170px;
@@ -17496,6 +17497,32 @@ h3 {
   line-height: 22px;
   font-weight: 700;
 }
-.dropdowns .input-group .input-group-append .btn-group .btn {
-  border-radius: 0;
+.dropdowns .input-group .btn-group.show {
+  width: 670px;
+}
+.dropdowns .input-group .btn-group.show .form-control {
+  border-bottom-left-radius: 0;
+}
+.dropdowns .input-group .btn-group.show > .btn:not(:first-child) {
+  border-bottom-right-radius: 0;
+}
+.dropdowns .input-group .btn-group.show .dropdown-toggle::after {
+  display: inline-block;
+  margin-left: 0.255em;
+  vertical-align: 0.255em;
+  content: "";
+  border-top: 0;
+  border-right: 0.3em solid transparent;
+  border-bottom: 0.3em solid;
+  border-left: 0.3em solid transparent;
+}
+.dropdowns .input-group .btn-group.show .dropdown-toggle:empty::after {
+  margin-left: 0;
+}
+.dropdowns .input-group .btn-group.show .dropdown-menu {
+  width: 670px;
+  left: 1px !important;
+}
+.dropdowns .input-group .dropdown-menu {
+  margin: -1px;
 }/*# sourceMappingURL=main.css.map */

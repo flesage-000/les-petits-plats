@@ -1,5 +1,6 @@
 .dropdowns {
   display: flex;
+  flex-wrap: wrap;
 
   .input-group {
     flex-basis: 170px;
@@ -11,9 +12,27 @@
 
       @include _font($family: 'Lato', $size: 18px, $lineHeight: 22px, $weight: 700);
     }
-    .input-group-append .btn-group .btn {
-      border-radius: 0;
-    }
+    .btn-group {
+      &.show {
+        width: 670px;
 
+        .form-control {
+          border-bottom-left-radius: 0;
+        }
+        & > .btn:not(:first-child) {
+          border-bottom-right-radius: 0;
+        }
+        .dropdown-toggle {
+          @include caret(up);
+        }
+        .dropdown-menu {
+          width: 670px;
+          left: 1px !important;
+        }
+      }
+    }
+    .dropdown-menu {
+      margin: -1px;
+    }
   }
 }
