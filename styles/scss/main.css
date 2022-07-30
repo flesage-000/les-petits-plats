@@ -17489,6 +17489,7 @@ h3 {
   margin: 0 20px 25px 0;
 }
 .dropdowns .input-group .form-control {
+  border-radius: 5px 0 0 5px;
   padding: 25px 15px 24px;
   font-family: "Lato", sans-serif;
   font-size: 18px;

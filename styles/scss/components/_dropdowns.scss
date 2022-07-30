@@ -6,6 +6,7 @@
     margin: 0 20px 25px 0;
 
     .form-control {
+      border-radius: $border-radius 0 0 $border-radius ;
       padding: 25px 15px 24px;
 
       @include _font($family: 'Lato', $size: 18px, $lineHeight: 22px, $weight: 700);

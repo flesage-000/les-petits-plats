@@ -61,22 +61,23 @@
 
       <div class="input-group">
 
-        <input  type="text"
-                id="searchIngredients"
-                class="form-control text-white rounded-left border bg-blue border-blue"
-                placeholder="Ingredients">
-
         <div class="input-group-append">
           <div class="btn-group">
+
+            <input  type="text"
+                    id="searchIngredients"
+                    class="form-control text-white bg-blue border-blue"
+                    placeholder="Ingredients">
 
             <button type="button"
                     class="btn btn-blue dropdown-toggle dropdown-toggle-split rounded-right"
                     data-toggle="dropdown"
-                    aria-expanded="false">
+                    aria-expanded="false"
+                    data-reference="parent">
               <span class="sr-only">Toggle Dropdown</span>
             </button>
 
-            <div class="dropdown-menu bg-blue">
+            <div class="dropdown-menu dropdown-menu-left bg-blue">
               <a class="dropdown-item text-white bg-blue" href="#">Action</a>
               <div class="dropdown-divider"></div>
               <a class="dropdown-item text-white bg-blue" href="#">Separated link</a>
@@ -88,18 +89,19 @@
 
       <div class="input-group">
 
-        <input  type="text"
-                id="searchDevices"
-                class="form-control text-white rounded-left bg-green border border-green"
-                placeholder="Appareils">
-
         <div class="input-group-append">
           <div class="btn-group">
+
+            <input  type="text"
+                    id="searchDevices"
+                    class="form-control text-white bg-green border-green"
+                    placeholder="Appareils">
 
             <button type="button"
                     class="btn btn-green dropdown-toggle dropdown-toggle-split rounded-right"
                     data-toggle="dropdown"
-                    aria-expanded="false">
+                    aria-expanded="false"
+                    data-reference="parent">
               <span class="sr-only">Toggle Dropdown</span>
             </button>
 
@@ -115,18 +117,19 @@
 
       <div class="input-group">
 
-        <input  type="text"
-                id="searchUstensils"
-                class="form-control text-white rounded-left border bg-red border-red"
-                placeholder="Ustensiles">
-
         <div class="input-group-append">
           <div class="btn-group">
+
+            <input  type="text"
+                    id="searchUstensils"
+                    class="form-control text-white bg-red border-red"
+                    placeholder="Ustensiles">
 
             <button type="button"
                     class="btn btn-red dropdown-toggle dropdown-toggle-split rounded-right"
                     data-toggle="dropdown"
-                    aria-expanded="false">
+                    aria-expanded="false"
+                    data-reference="parent">
               <span class="sr-only">Toggle Dropdown</span>
             </button>
 
@@ -177,6 +180,7 @@
   </div>
 
   <script src="./node_modules/jquery/dist/jquery.slim.min.js"></script>
+  <script src="./node_modules/popper.js/dist/umd/popper.min.js"></script>
   <script src="./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
