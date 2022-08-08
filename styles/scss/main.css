@@ -17742,6 +17742,12 @@ h3 {
 .results .recipe p {
   margin-bottom: 0;
 }
+.results .recipe p {
+  -webkit-line-clamp: 6;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
 
 .tags .btn {
   margin: 0 15px 15px 0;

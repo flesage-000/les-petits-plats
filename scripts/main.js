@@ -6,13 +6,13 @@ class main {
   constructor() {}
 
   init() {
-    const _search = new search(recipes);
+    const _search = new search(data);
     _search.init();
 
-    const _tags = new tags(recipes);
+    const _tags = new tags(data);
     _tags.init();
 
-    const _result = new result(recipes);
+    const _result = new result(data);
     _result.init();
   }
 }
