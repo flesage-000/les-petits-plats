@@ -1,5 +1,6 @@
 import { search } from "./modules/search.js";
 import { tags } from "./modules/tags.js"
+import { result } from "./modules/result.js"
 
 class main {
   constructor() {}
@@ -10,6 +11,9 @@ class main {
 
     const _tags = new tags(recipes);
     _tags.init();
+
+    const _result = new result(recipes);
+    _result.init();
   }
 }
 
