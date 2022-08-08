@@ -50,12 +50,12 @@ class tplRecipeCard {
         // All datas are available
         case ingredient.quantity !== undefined && ingredient.unit !== undefined:
           $li.innerText = ingredient.quantity + ingredient.unit;
-          $span.innerText = ingredient.ingredient + ":";
+          $span.innerText = ingredient.ingredient + ": ";
           break;
         // Unit data not available
         case ingredient.quantity !== undefined && ingredient.unit === undefined:
           $li.innerText = ingredient.quantity;
-          $span.innerText = ingredient.ingredient + ":";
+          $span.innerText = ingredient.ingredient + ": ";
           break;
         // Quantity and unit not availables
         case ingredient.quantity === undefined && ingredient.unit === undefined:
@@ -65,10 +65,10 @@ class tplRecipeCard {
           console.error("ingredient not managed => ", ingredient);
       }
 
+      // Add bootstrap class
+      $span.classList.add("font-weight-bolder");
+
       $li.prepend($span);
-      const $content = `
-      <li><span class="font-weight-bolder">${ingredient.ingredient}: </span>${ingredient.quantity}${ingredient.unit}</li>
-      `;
       $ul.appendChild($li);
     });
 
