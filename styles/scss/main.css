@@ -17698,7 +17698,7 @@ h3 {
 .mainSearch .form-control::placeholder {
   color: #000;
 }
-.mainSearch .btn {
+.mainSearch .input-group-text {
   -webkit-text-stroke: 1px;
 }
 
