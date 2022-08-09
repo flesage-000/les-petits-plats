@@ -10,13 +10,15 @@ class tplRecipeCard {
 
       <h5 class="card-title row"><span class="col">${recipe.name}</span><time datetime="${recipe.time[0]}" class="text-truncate col-auto"><i class="bi bi-clock" aria-label="horloge"></i>${recipe.time[1]}</time></h5>
 
-      <div class="recipe row">
-        <div class="ingredients col"></div>
+      <div class="recipe container">
+        <div class="row row-cols-2">
+          <div class="ingredients col"></div>
 
-        <div class="preparation col">
-          <p>
-            ${recipe.description}
-          </p>
+          <div class="preparation col">
+            <p>
+              ${recipe.description}
+            </p>
+          </div>
         </div>
       </div>
 
