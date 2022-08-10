@@ -1,4 +1,5 @@
 import { utils } from "./utils.js";
+import { tagTpl } from "./templates/tag.js"
 
 class tags {
   constructor() {
@@ -62,9 +63,8 @@ class tags {
         }
         break;
       default:
-        console.warn("Uknown 'tagType' => ", tagType);
+        console.warn("Unknown 'tagType' => ", tagType);
     }
-    console.log("this.tags", this.tags);
   }
 
   /**
@@ -76,33 +76,27 @@ class tags {
   updateTags(item, tags) {
     if (tags.includes(item)) { return; }
     tags.push(item);
-    tags.sort();
+    tags.sort((a, b) => a.localeCompare(b));
   }
 
+  /**
+   * Add tags in DOM.
+   */
   add() {
     const _tagTpl = new tagTpl();
-    const tagTypes = Object.getOwnPropertyNames(this.tags);
-    console.log("tagTypes", tagTypes, this.tags);
 
     for(let tagsCollection in this.tags) {
       const cssSelector = `.${tagsCollection} .tags .row`;
       const $wrapper = document.querySelector(cssSelector);
       const $fragment = document.createDocumentFragment();
+
       this.tags[tagsCollection].forEach(items => {
         const tpl = _tagTpl.list(items, tagsCollection);
         $fragment.appendChild(tpl);
       });
+
       $wrapper.appendChild($fragment);
     }
-
-    // this.tags.ingredients.forEach((item, key, array) => {
-    //   const tpl = _tagTpl.list(item, tagTypes[0]);
-    //   console.log("tpl", tpl, typeof tpl);
-    //   $contentIngredients.appendChild(tpl);
-    // });
-// console.log("$contentIngwrapperIngredientsredients", $contentIngredients);
-
-    // $wrapperIngredients.appendChild($contentIngredients);
   }
 }
 

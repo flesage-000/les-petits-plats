@@ -11,3 +11,5 @@ class tagTpl {
     return $wrapper;
   }
 }
+
+export { tagTpl };
