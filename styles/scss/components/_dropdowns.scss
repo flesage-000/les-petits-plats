@@ -33,6 +33,12 @@
     }
     .dropdown-menu {
       margin: -1px;
+
+      .row {
+        max-height: 50vh;
+        overflow-x: hidden;
+        overflow-y: auto;
+      }
     }
   }
 }

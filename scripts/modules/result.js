@@ -1,9 +1,13 @@
 import { recipes } from "./models/recipes.js";
+import { tags } from "./tags.js";
 
 class result {
-  constructor() {}
+  constructor() {
+    this._tags = new tags();
+  }
 
   init() {
+
     this.generateCard();
   }
 
@@ -18,8 +22,14 @@ class result {
 
       $container.appendChild($wrapper);
 
+      // Update tags list
+      this._tags.updateList(recipe.ingredients, "ingredients");
+      this._tags.updateList(recipe.appliance, "devices");
+      this._tags.updateList(recipe.ustensils, "ustensils");
+
       if (Object.is(data.length - 1, key)) {
         this.cssGridManager($container, recipeLength);
+        this._tags.add();
       }
     });
   }
