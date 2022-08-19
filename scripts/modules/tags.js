@@ -8,38 +8,74 @@ class tags {
       "devices": [],
       "ustensils": []
     };
-    this.tagsIngredients = [];
-    this.tagsDevices = [];
-    this.tagsUstensils = [];
+    this._utils = new utils();
+    this.$selectedTagContainer = document.querySelector(".container > .tags");
   }
 
-  init() {
-    this.events();
-  }
+  init() {}
 
   /**
    * Add events for tags search
    */
-  events() {
-    let inputTags = [];
-    inputTags.push(document.querySelector("#searchIngredients"));
-    inputTags.push(document.querySelector("#searchDevices"));
-    inputTags.push(document.querySelector("#searchUstensils"));
+  eventTagsToSelect(tagName) {
+    const tagNameCamelCase = tagName[0].toUpperCase() + tagName.slice(1);
+    const tagId = `#search${tagNameCamelCase}`;
+    const $tagInput = document.querySelector(tagId);
+    const event = "keyup";
+    const eventFunction = (ev) => {
+      const value = ev.target.value;
+      const valueLength = value.length;
+      const cssSelector = `.${tagName} .tags .row .col`;
+      const elements = document.querySelectorAll(cssSelector);
 
-    inputTags.forEach( input => {
-      const event = "keyup";
-      const eventFunction = function (ev) {
-        const value = ev.target.value;
-        const valueLength = value.length;
+      elements.forEach(element => {
+        const regex = new RegExp(value, "i");
+        const elementSelected = element.querySelector("a").dataset.selected;
 
-        if(valueLength <= 2) { return; }
+        switch(true) {
+          case elementSelected == "true":
+            break;
+          case valueLength <= 2 || valueLength >= 3 && regex.test(element.textContent):
+            element.style.display = "";
+            break;
+          default:
+            element.style.display = "none";
+        }
+      });
+      this.tags[tagName].filter(string => string.includes(value));
 
-        console.log("search for tags result");
-      };
+    };
 
-      const _utils = new utils();
-      _utils.addListeners(input, event, eventFunction);
-    });
+    const _utils = new utils();
+    _utils.addListeners($tagInput, event, eventFunction)
+  }
+
+  /**
+   * Action ti do when tag button is clicked.
+   * @param {Object} element A HTML node
+   */
+  eventTagsSelected(element) {
+    const tagLink = element.querySelector("a");
+    const eventFunction = (ev) => {
+      ev.preventDefault();
+
+      const link = ev.target;
+      const tagName = link.dataset.tagName;
+      const tagType = link.dataset.tagType;
+      const _tagTpl = new tagTpl();
+      const tag = _tagTpl.button(tagName, tagType);
+      this.$selectedTagContainer.appendChild(tag);
+
+      const newTag = this.$selectedTagContainer.lastChild;
+      this.removeSelectedTag(newTag);
+
+
+      link.dataset.selected = true;
+      this._utils.hideShow(link.parentNode);
+    };
+
+    this._utils.addListeners(tagLink, "click", eventFunction );
+
   }
 
   /**
@@ -90,13 +126,43 @@ class tags {
       const $wrapper = document.querySelector(cssSelector);
       const $fragment = document.createDocumentFragment();
 
-      this.tags[tagsCollection].forEach(items => {
+      this.tags[tagsCollection].forEach((items, key, array) => {
         const tpl = _tagTpl.list(items, tagsCollection);
         $fragment.appendChild(tpl);
+        this.eventTagsSelected(tpl);
+
+        if(array.length - 1 === key) {
+          this.eventTagsToSelect(tagsCollection);
+        }
       });
 
       $wrapper.appendChild($fragment);
     }
+  }
+
+  /**
+   * To remove a selected tag then toggle "data-selected" value on tag in tag list.
+   * @param {Object} tag A HTML node.
+   */
+  removeSelectedTag(tag) {
+    const eventFunction = (ev) => {
+      ev.preventDefault();
+      const tagName = ev.target.dataset.tagName;
+      const tagType = ev.target.dataset.tagType;
+      this.dataSelectedToggle(tagType, tagName);
+
+      ev.target.remove();
+    };
+    this._utils.addListeners(tag, "click", eventFunction);
+  }
+
+  dataSelectedToggle(tagType, tagName) {
+    const cssSelector = "." + tagType + " [data-tag-type='" + tagType + "'][data-tag-name='" + tagName + "']";
+    const element = document.querySelector(cssSelector);
+    const parentElement = element.parentNode;
+
+    element.dataset.selected = true;
+    parentElement.style.display = "";
   }
 }
 

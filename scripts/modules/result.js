@@ -7,7 +7,6 @@ class result {
   }
 
   init() {
-
     this.generateCard();
   }
 
