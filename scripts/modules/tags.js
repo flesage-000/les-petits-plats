@@ -156,6 +156,11 @@ class tags {
     this._utils.addListeners(tag, "click", eventFunction);
   }
 
+  /**
+   * To reactivate tag from taglist dropdown.
+   * @param {String} tagType The tag type.
+   * @param {String} tagName The tag name.
+   */
   dataSelectedToggle(tagType, tagName) {
     const cssSelector = "." + tagType + " [data-tag-type='" + tagType + "'][data-tag-name='" + tagName + "']";
     const element = document.querySelector(cssSelector);
