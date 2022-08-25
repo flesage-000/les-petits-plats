@@ -1,7 +1,10 @@
 import { utils } from "./utils.js";
+import { result } from "./result.js";
 
 class search {
-  constructor() {}
+  constructor() {
+    this.tagsNode = document.querySelector(".tags");
+  }
 
   init() {
     this.events();
@@ -20,6 +23,10 @@ class search {
       if(valueLength <= 2) { return; }
 
       console.log("search for main result");
+
+      const _result = new result();
+      _result.refresh("plop");
+
     };
 
     const _utils = new utils();

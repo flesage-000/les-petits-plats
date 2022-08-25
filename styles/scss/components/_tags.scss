@@ -1,10 +1,15 @@
 .tags {
   .btn {
+    position: relative;
     margin: 0 15px 15px 0;
+    padding-right: 30px;
 
     @include _font($family: 'Lato', $size: 14px, $lineHeight: 17px, $weight: 700);
 
-    .bi {
+    &.bi:before {
+      position: absolute;
+      top: 6px;
+      right: 8px;
       margin: 0 0 0 13px;
       -webkit-text-stroke: 1px;
     }

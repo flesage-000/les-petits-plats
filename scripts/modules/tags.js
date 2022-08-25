@@ -1,12 +1,20 @@
 import { utils } from "./utils.js";
-import { tagTpl } from "./templates/tag.js"
+import { tagTpl } from "./templates/tag.js";
+import { result } from "./result.js";
 
 class tags {
   constructor() {
     this.tags = {
-      "ingredients": [],
-      "devices": [],
-      "ustensils": []
+      toSelect: {
+        "ingredients": [],
+        "devices": [],
+        "ustensils": []
+      },
+      selected: {
+        "ingredients": [],
+        "devices": [],
+        "ustensils": []
+      }
     };
     this._utils = new utils();
     this.$selectedTagContainer = document.querySelector(".container > .tags");
@@ -42,7 +50,7 @@ class tags {
             element.style.display = "none";
         }
       });
-      this.tags[tagName].filter(string => string.includes(value));
+      this.tags.toSelect[tagName].filter(string => string.includes(value));
 
     };
 
@@ -66,16 +74,16 @@ class tags {
       const tag = _tagTpl.button(tagName, tagType);
       this.$selectedTagContainer.appendChild(tag);
 
+      this.addTagSelectedToArray(tagType, tagName);
+
       const newTag = this.$selectedTagContainer.lastChild;
       this.removeSelectedTag(newTag);
-
 
       link.dataset.selected = true;
       this._utils.hideShow(link.parentNode);
     };
 
     this._utils.addListeners(tagLink, "click", eventFunction );
-
   }
 
   /**
@@ -87,15 +95,15 @@ class tags {
     switch(tagType) {
       case "ingredients":
         for(const ingredient of items) {
-          this.updateTags(ingredient.ingredient, this.tags.ingredients);
+          this.updateTags(ingredient.ingredient, this.tags.toSelect.ingredients);
         }
         break;
       case "devices":
-        this.updateTags(items, this.tags.devices);
+        this.updateTags(items, this.tags.toSelect.devices);
         break;
       case "ustensils":
         for(const ustensil of items) {
-          this.updateTags(ustensil, this.tags.ustensils);
+          this.updateTags(ustensil, this.tags.toSelect.ustensils);
         }
         break;
       default:
@@ -121,12 +129,12 @@ class tags {
   add() {
     const _tagTpl = new tagTpl();
 
-    for(let tagsCollection in this.tags) {
+    for(let tagsCollection in this.tags.toSelect) {
       const cssSelector = `.${tagsCollection} .tags .row`;
       const $wrapper = document.querySelector(cssSelector);
       const $fragment = document.createDocumentFragment();
 
-      this.tags[tagsCollection].forEach((items, key, array) => {
+      this.tags.toSelect[tagsCollection].forEach((items, key, array) => {
         const tpl = _tagTpl.list(items, tagsCollection);
         $fragment.appendChild(tpl);
         this.eventTagsSelected(tpl);
@@ -147,13 +155,55 @@ class tags {
   removeSelectedTag(tag) {
     const eventFunction = (ev) => {
       ev.preventDefault();
+      console.log("ev", ev.target.dataset);
       const tagName = ev.target.dataset.tagName;
       const tagType = ev.target.dataset.tagType;
       this.dataSelectedToggle(tagType, tagName);
+      this.removeTagSelectedToArray(tagType, tagName);
 
       ev.target.remove();
     };
     this._utils.addListeners(tag, "click", eventFunction);
+  }
+
+  /**
+   * To Add tag from tag selected array.
+   * @param {String} tagType The type of tag to add.
+   * @param {String} tagName The name of the tag to add.
+   */
+  addTagSelectedToArray(tagType, tagName) {
+    let tagArray = this.getSelectedArray(tagType);
+
+    tagArray.push(tagName);
+  }
+
+  /**
+   * To remove tag from tag selected array.
+   * @param {String} tagType The type of tag to delete.
+   * @param {String} tagName The name of the tag to delete.
+   */
+  removeTagSelectedToArray(tagType, tagName) {
+    let tagArray = this.getSelectedArray(tagType);
+
+    tagArray.filter(element => {
+      return element != tagName;
+    });
+  }
+
+  getSelectedArray(tagType) {
+    switch(tagType) {
+      case "ingredients":
+        return this.tags.selected.ingredients;
+        break;
+      case "devices":
+        return this.tags.selected.devices;
+        break;
+      case "ustensils":
+        return this.tags.selected.ustensils;
+        break;
+      default:
+        console.warn("tagType '" + tagType + "' doesn't exist!");
+    }
   }
 
   /**
@@ -163,6 +213,7 @@ class tags {
    */
   dataSelectedToggle(tagType, tagName) {
     const cssSelector = "." + tagType + " [data-tag-type='" + tagType + "'][data-tag-name='" + tagName + "']";
+    console.log("cssSelector", cssSelector);
     const element = document.querySelector(cssSelector);
     const parentElement = element.parentNode;
 

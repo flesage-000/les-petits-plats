@@ -7,10 +7,13 @@ class result {
   }
 
   init() {
-    this.generateCard();
+    this.refresh(data);
   }
 
-  generateCard() {
+  /**
+   * Create recipe results cards.
+   */
+  generateCard(data) {
     const $container = document.querySelector(".results");
     const recipeLength = data.length;
 
@@ -31,6 +34,10 @@ class result {
         this._tags.add();
       }
     });
+  }
+
+  refresh(data) {
+    this.generateCard(data);
   }
 
   /**
