@@ -55,7 +55,7 @@ class tags {
     };
 
     const _utils = new utils();
-    _utils.addListeners($tagInput, event, eventFunction)
+    _utils.addListeners($tagInput, event, eventFunction);
   }
 
   /**
@@ -73,7 +73,6 @@ class tags {
       const _tagTpl = new tagTpl();
       const tag = _tagTpl.button(tagName, tagType);
       this.$selectedTagContainer.appendChild(tag);
-
       this.addTagSelectedToArray(tagType, tagName);
 
       const newTag = this.$selectedTagContainer.lastChild;
@@ -81,6 +80,10 @@ class tags {
 
       link.dataset.selected = true;
       this._utils.hideShow(link.parentNode);
+
+      // Refresh results
+      const _result = new result(data);
+      _result.refresh(this.tags.selected);
     };
 
     this._utils.addListeners(tagLink, "click", eventFunction );
@@ -89,7 +92,7 @@ class tags {
   /**
    * Add tags to the appropriate array.
    * @param {Object or string} items The array or string to inject into the tag array.
-   * @param {string} tagType The name of the tag.
+   * @param {String} tagType The name of the tag.
    */
   updateList(items, tagType) {
     switch(tagType) {

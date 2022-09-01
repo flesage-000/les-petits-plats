@@ -12,7 +12,7 @@ class main {
     const _tags = new tags(data);
     _tags.init();
 
-    const _result = new result(data);
+    const _result = new result();
     _result.init();
   }
 }
