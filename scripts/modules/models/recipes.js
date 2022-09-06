@@ -58,7 +58,9 @@ class recipes {
   }
 
   get appliance() {
-    return this._appliance;
+    let array = [];
+    array.push(this._appliance);
+    return array;
   }
 
   get ustensils() {

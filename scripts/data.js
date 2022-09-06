@@ -1,3 +1,12 @@
+let filter = [
+    {
+      ingredient: [],
+      devices: [],
+      ustensils: []
+    }
+  ];
+
+/** Données JSON des recettes. */
 const data = [
   {
       "id": 1,
@@ -1724,3 +1733,5 @@ const data = [
       "ustensils":["rouleau à patisserie","fouet"]
   }
 ]
+
+export { data, filter };

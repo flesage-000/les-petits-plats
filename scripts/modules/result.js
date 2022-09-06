@@ -1,9 +1,11 @@
 import { recipes } from "./models/recipes.js";
+import { tplRecipeCard } from "./templates/recipeCard.js";
 import { tags } from "./tags.js";
 
 class result {
-  constructor() {
-    this._tags = new tags();
+  constructor(data) {
+    this._tags = new tags(data);
+    this._data = data;
   }
 
   init() {
@@ -12,13 +14,13 @@ class result {
 
   /**
    * Create recipe results cards.
+   * @param {object} Filter Un tableau contenant les tags sélectionnés par l'utilisateur. Peut ne pas être envoyé, il ne sera alors qu'un objet vide.
    */
-  generateCard(filter = new Object()) {
+  generateCard(filter = new Object()) { console.log("filter", typeof filter, filter);
     const $container = document.querySelector(".results");
-    const recipeLength = data.length;
+    const data = this._data;
     const filterLength = Object.keys(filter).length;
     let recipeToDisplay = 0;
-
     data.filter((recipe, key, data) => {
       /**
        * @description Generated HTML card. If null, no content has been generated.
@@ -41,37 +43,33 @@ class result {
         const devicesFilterLength = devicesFilter.length;
         const ustensilsFilterLength = ustensilsFilter.length;
 
-        const ingredientsFilterSet = new Set(ingredientsFilter);
-        const devicesFilterSet = new Set(devicesFilter);
-        const ustensilsFilterSet = new Set(ustensilsFilter);
-
         const recipeIngredients = recipe.ingredients;
         const recipeDevices = recipe.appliance;
         const recipeUstensils = recipe.ustensils;
 
-        let hasIngredient;
+        let includeIngredient = false;
         if (ingredientsFilterLength >= 1) {
           recipeIngredients.forEach(recipeIngredient => {
-            hasIngredient = ingredientsFilterSet.has(recipeIngredient.ingredient);
+            if (ingredientsFilter.includes(recipeIngredient.ingredient)) { includeIngredient = true; }
           });
-        } else { hasIngredient = true; }
+        } else { includeIngredient = true; }
 
-        let hasDevices;
+        let includeDevices = false;
         if (devicesFilterLength >= 1) {
           recipeDevices.forEach(recipeAppliance => {
-            hasDevices = devicesFilterSet.has(recipeAppliance.appliance);
+            if (devicesFilter.includes(recipeAppliance.appliance)) { includeDevices = true; }
           });
-        } else { hasDevices = true; }
+        } else { includeDevices = true; }
 
-        let hasUstensils;
+        let includeUstensils = false;
         if (ustensilsFilterLength >= 1) {
           recipeUstensils.forEach(recipeUstensil => {
-            hasUstensils = ustensilsFilterSet.has(recipeUstensil.ustensils);
+            if (ustensilsFilter.includes(recipeUstensil)) { includeUstensils = true; }
           });
-        } else { hasUstensils = true; }
+        } else { includeUstensils = true; }
 
         // Generate filtered results
-        if (hasIngredient && hasDevices && hasUstensils) {
+        if (includeIngredient && includeDevices && includeUstensils) {
           recipe = new recipes(recipe);
           const card = new tplRecipeCard(recipe);
           $wrapper = card.card(recipe);
@@ -81,12 +79,6 @@ class result {
           this._tags.updateList(recipe.appliance, "devices", devicesFilter);
           this._tags.updateList(recipe.ustensils, "ustensils", ustensilsFilter);
         }
-
-
-
-
-
-console.log("if", recipe);
       } else {
         // Generate All results
         recipe = new recipes(recipe);
@@ -97,13 +89,11 @@ console.log("if", recipe);
         this._tags.updateList(recipe.ingredients, "ingredients");
         this._tags.updateList(recipe.appliance, "devices");
         this._tags.updateList(recipe.ustensils, "ustensils");
-console.log("else");
       }
 
       if ($wrapper != null) {
         recipeToDisplay++;
         $container.appendChild($wrapper);
-        console.log("recipeToDisplay", recipeToDisplay);
       }
 
       // Callback
@@ -111,14 +101,8 @@ console.log("else");
         // Manage CSS grid results
         this.cssGridManager($container, recipeToDisplay);
         this._tags.add();
-        console.log("CALLBACK recipeToDisplay", recipeToDisplay);
       }
     });
-  }
-
-  refresh(filter) {
-    console.log("filter", filter);
-    this.generateCard(filter);
   }
 
   /**

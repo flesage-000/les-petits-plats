@@ -3,7 +3,8 @@ import { tagTpl } from "./templates/tag.js";
 import { result } from "./result.js";
 
 class tags {
-  constructor() {
+  constructor(data) {
+    this._data = data;
     this.tags = {
       toSelect: {
         "ingredients": [],
@@ -82,8 +83,8 @@ class tags {
       this._utils.hideShow(link.parentNode);
 
       // Refresh results
-      const _result = new result(data);
-      _result.refresh(this.tags.selected);
+      const _result = new result(this._data);
+      _result.generateCard(this.tags.selected);
     };
 
     this._utils.addListeners(tagLink, "click", eventFunction );
@@ -102,7 +103,9 @@ class tags {
         }
         break;
       case "devices":
-        this.updateTags(items, this.tags.toSelect.devices);
+        for(const device of items) {
+          this.updateTags(device, this.tags.toSelect.devices);
+        }
         break;
       case "ustensils":
         for(const ustensil of items) {
