@@ -359,6 +359,41 @@ class recipes {
     let array = [];
     let currentName = this._appliance.toLowerCase();
     currentName = currentName.charAt(0).toUpperCase() + currentName.slice(1);
+
+    switch (currentName) {
+      case "Blender":
+        // currentName = "";
+        break;
+      case "Casserole":
+      case "Casserolle":
+      case "Casserolle.":
+        currentName = "Casserole";
+        break;
+      case "Cocotte":
+      case "Cuiseur de riz":
+      case "Four":
+        // currentName = "";
+        break;
+
+      case "Mixer":
+        currentName = "Mixeur";
+        break;
+      case "Moule à charlotte":
+        // currentName = "";
+        break;
+      case "Poële":
+        currentName = "Poêle";
+        break;
+      case "Poële à crêpe":
+        currentName = "Poêle à crêpe";
+        break;
+      case "Saladier":
+      case "Sauteuse":
+        // currentName = "";
+        break;
+      default: console.warn("ERROR device '" + currentName + "' not managed!");
+    }
+
     array.push(currentName);
 
     return array;
