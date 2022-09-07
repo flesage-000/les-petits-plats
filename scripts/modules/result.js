@@ -71,9 +71,9 @@ class result {
 
         // Generate filtered results
         if (includeIngredient && includeDevices && includeUstensils) {
-          recipe = new recipes(recipe);
-          const card = new tplRecipeCard(recipe);
-          $wrapper = card.card(recipe);
+          // recipe = new recipes(recipe);
+          const card = new tplRecipeCard(this._recipes);
+          $wrapper = card.card();
 
           // Update tags list
           this._tags.updateList(recipe.ingredients, "ingredients", ingredientsFilter);
@@ -82,9 +82,9 @@ class result {
         }
       } else {
         // Generate All results
-        recipe = new recipes(recipe);
-        const card = new tplRecipeCard(recipe);
-        $wrapper = card.card(recipe);
+        // recipe = new recipes(recipe);
+        const card = new tplRecipeCard(this._recipes);
+        $wrapper = card.card();
 
         // Update tags list
         this._tags.updateList(recipe.ingredients, "ingredients");

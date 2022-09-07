@@ -1,14 +1,17 @@
 class tplRecipeCard {
-  constructor() {}
+  constructor(recipe) {
+    this.recipe = recipe;
+  }
 
-  card(recipe) {
+  card() {
     const $wrapper = document.createElement("div");
+    console.log("recipe", this.recipe);
     const $content = `
     <img src="" class="card-img-top bg-card-header" alt="...">
 
     <div class="card-body bg-card-body">
 
-      <h5 class="card-title row"><span class="col">${recipe.name}</span><time datetime="${recipe.time[0]}" class="text-truncate col-auto"><i class="bi bi-clock" aria-label="horloge"></i>${recipe.time[1]}</time></h5>
+      <h5 class="card-title row"><span class="col">${this.recipe.name}</span><time datetime="${this.recipe.time[0]}" class="text-truncate col-auto"><i class="bi bi-clock" aria-label="horloge"></i>${this.recipe.time[1]}</time></h5>
 
       <div class="recipe container">
         <div class="row row-cols-2">
@@ -16,7 +19,7 @@ class tplRecipeCard {
 
           <div class="preparation col">
             <p>
-              ${recipe.description}
+              ${this.recipe._description}
             </p>
           </div>
         </div>
@@ -28,7 +31,7 @@ class tplRecipeCard {
     $wrapper.innerHTML = $content;
 
     const $wrapperIngredient = $wrapper.querySelector(".ingredients");
-    const $contentIngredient = this.ingredients(recipe);
+    const $contentIngredient = this.ingredients(this.recipe.ingredients);
     $wrapperIngredient.appendChild($contentIngredient);
 
     // Add Boostrap class
@@ -40,8 +43,8 @@ class tplRecipeCard {
 
   ingredients(ingredients) {
     const $ul = document.createElement("ul");
-
-    ingredients._ingredients.forEach(ingredient => {
+console.log("ingredients", ingredients);
+    ingredients.forEach(ingredient => {
       const $li = document.createElement("li");
       const $span = document.createElement("span");
       let string;
