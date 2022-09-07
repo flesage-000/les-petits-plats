@@ -405,6 +405,52 @@ class recipes {
     this._ustensils.forEach(ustensil => {
       ustensil = ustensil.toLowerCase();
       ustensil = ustensil.charAt(0).toUpperCase() + ustensil.slice(1);
+
+      switch (ustensil) {
+        case "Bol":
+          // ustensil: "";
+          break;
+        case "Casserolle":
+          ustensil = "Casserole";
+          break;
+        case "Cocotte minute":
+        case "Couteau":
+        case "Cuillère à melon":
+        case "Cuillère à soupe":
+        case "Cuillère en bois":
+        case "Économe":
+        case "Fouet":
+        case "Fourchette":
+        case "Louche":
+        case "Moule":
+          // ustensil = "";
+          break;
+        case "Moule à gateaux":
+          ustensil = "Moule à gâteaux";
+          break;
+        case "Moule à tarte":
+        case "Moule à tartelettes (6)":
+        case "Passoire":
+        case "Plaque de cuisson":
+        case "Plat à gratin":
+          // ustensil = "";
+          break;
+        case "Poelle à frire":
+          ustensil = "Poêle à frire";
+          break;
+        case "Presse citron":
+        case "Râpe à fromage":
+        case "Rouleau à patisserie":
+        case "Saladier":
+        case "Spatule":
+          // ustensil = "";
+          break;
+        case "Verres":
+          ustensil = "Verre";
+          break;
+        default: console.warn("ERROR ustensil '" + ustensil + "' not managed!");
+      }
+
       newUstensils.push(ustensil);
     });
 
