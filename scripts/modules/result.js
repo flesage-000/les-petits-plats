@@ -76,9 +76,9 @@ class result {
           $wrapper = card.card();
 
           // Update tags list
-          this._tags.updateList(recipe.ingredients, "ingredients", ingredientsFilter);
-          this._tags.updateList(recipe.appliance, "devices", devicesFilter);
-          this._tags.updateList(recipe.ustensils, "ustensils", ustensilsFilter);
+          this._tags.updateList(this._recipes.ingredients, "ingredients", ingredientsFilter);
+          this._tags.updateList(this._recipes.appliance, "devices", devicesFilter);
+          this._tags.updateList(this._recipes.ustensils, "ustensils", ustensilsFilter);
         }
       } else {
         // Generate All results
@@ -87,9 +87,9 @@ class result {
         $wrapper = card.card();
 
         // Update tags list
-        this._tags.updateList(recipe.ingredients, "ingredients");
-        this._tags.updateList(recipe.appliance, "devices");
-        this._tags.updateList(recipe.ustensils, "ustensils");
+        this._tags.updateList(this._recipes.ingredients, "ingredients");
+        this._tags.updateList(this._recipes.appliance, "devices");
+        this._tags.updateList(this._recipes.ustensils, "ustensils");
       }
 
       if ($wrapper != null) {

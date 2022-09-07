@@ -5,7 +5,7 @@ class tplRecipeCard {
 
   card() {
     const $wrapper = document.createElement("div");
-    console.log("recipe", this.recipe);
+
     const $content = `
     <img src="" class="card-img-top bg-card-header" alt="...">
 
@@ -43,7 +43,7 @@ class tplRecipeCard {
 
   ingredients(ingredients) {
     const $ul = document.createElement("ul");
-console.log("ingredients", ingredients);
+
     ingredients.forEach(ingredient => {
       const $li = document.createElement("li");
       const $span = document.createElement("span");

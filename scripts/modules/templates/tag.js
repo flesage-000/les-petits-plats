@@ -1,7 +1,7 @@
 class tagTpl {
   constructor() {}
 
-  list(name, type) {
+  list(name, type) { // console.log("name", name);
     const $wrapper = document.createElement("div");
     const $link = `
       <a  class="dropdown-item text-white bg-${type} text-truncate"
