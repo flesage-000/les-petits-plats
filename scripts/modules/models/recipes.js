@@ -253,12 +253,12 @@ class recipes {
           case "cl":
             break;
           case "barquettes":
-            if (currentQuantity == 1) { currentUnit = "barquette"; }
-            else  { currentUnit = "barquettes"; }
+            if (currentQuantity == 1) { currentUnit = " barquette"; }
+            else  { currentUnit = " barquettes"; }
             break;
           case "boites":
-            if (currentQuantity == 1) { currentUnit = "boite"; }
-            else  { currentUnit = "boites"; }
+            if (currentQuantity == 1) { currentUnit = " boite"; }
+            else  { currentUnit = " boites"; }
             break;
           case "cuillères à café":
             currentUnit = "CàC";
@@ -268,15 +268,15 @@ class recipes {
             currentUnit = "CàS";
             break;
           case "feuilles":
-            if (currentQuantity == 1) { currentUnit = "feuille"; }
-            else  { currentUnit = "feuilles"; }
+            if (currentQuantity == 1) { currentUnit = " feuille"; }
+            else  { currentUnit = " feuilles"; }
             break;
           case "grammes":
             currentUnit = "g";
             break;
           case "gousses":
-            if (currentQuantity == 1) { currentUnit = "gousse"; }
-            else  { currentUnit = "gousses"; }
+            if (currentQuantity == 1) { currentUnit = " gousse"; }
+            else  { currentUnit = " gousses"; }
             break;
           case "kg":
             break;
@@ -289,28 +289,28 @@ class recipes {
             currentUnit = "ml";
             break;
           case "pincées":
-            if (currentQuantity == 1) { currentUnit = "pincée"; }
-            else  { currentUnit = "pincées"; }
+            if (currentQuantity == 1) { currentUnit = " pincée"; }
+            else  { currentUnit = " pincées"; }
             break;
           case "sachets":
-            if (currentQuantity == 1) { currentUnit = "sachet"; }
-            else  { currentUnit = "sachets"; }
+            if (currentQuantity == 1) { currentUnit = " sachet"; }
+            else  { currentUnit = " sachets"; }
             break;
           case "tasses":
-            if (currentQuantity == 1) { currentUnit = "tasse"; }
-            else  { currentUnit = "tasses"; }
+            if (currentQuantity == 1) { currentUnit = " tasse"; }
+            else  { currentUnit = " tasses"; }
             break;
           case "tiges":
-            if (currentQuantity == 1) { currentUnit = "tige"; }
-            else  { currentUnit = "tiges"; }
+            if (currentQuantity == 1) { currentUnit = " tige"; }
+            else  { currentUnit = " tiges"; }
             break;
           case "tranches":
-            if (currentQuantity == 1) { currentUnit = "tranche"; }
-            else  { currentUnit = "tranches"; }
+            if (currentQuantity == 1) { currentUnit = " tranche"; }
+            else  { currentUnit = " tranches"; }
             break;
           case "verres":
-            if (currentQuantity == 1) { currentUnit = "verre"; }
-            else  { currentUnit = "verres"; }
+            if (currentQuantity == 1) { currentUnit = " verre"; }
+            else  { currentUnit = " verres"; }
             break;
           default: console.warn("ERROR unit '" + currentUnit + "' not managed!");
         }
