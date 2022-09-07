@@ -36,7 +36,8 @@ class recipes {
       let currentIngredient = new Object();
 
       // Normalize ingredient name
-      let currentName = current.ingredient.toLowerCase();
+      let currentName = current.ingredient.trim();
+      currentName = currentName.toLowerCase();
       currentName = currentName.charAt(0).toUpperCase() + currentName.slice(1);
 
       switch(currentName) {
@@ -247,6 +248,7 @@ class recipes {
       let currentUnit = null;
       if (current.unit) {
         currentUnit = current.unit.toLowerCase();
+        currentUnit = currentUnit.trim();
         currentUnit = currentUnit.replace(".", "");
 
         switch (currentUnit) {
@@ -403,6 +405,7 @@ class recipes {
     let newUstensils = [];
 
     this._ustensils.forEach(ustensil => {
+      ustensil = ustensil.trim();
       ustensil = ustensil.toLowerCase();
       ustensil = ustensil.charAt(0).toUpperCase() + ustensil.slice(1);
 
