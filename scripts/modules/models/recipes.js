@@ -6,7 +6,7 @@ class recipes {
   constructor(data) {
     this._id = data.id;
     this._name = data.name;
-    this._serving = data.serving;
+    this._servings = data.servings;
     this._ingredients = data.ingredients;
     this._time = data.time;
     this._description = data.description;
@@ -22,8 +22,8 @@ class recipes {
     return this._name;
   }
 
-  get serving() {
-    return this._serving;
+  get servings()  {
+    return this._servings;
   }
 
   get ingredients() {

@@ -7,13 +7,13 @@ class tags {
     this._data = data;
     this.tags = {
       toSelect: {
-        "ingredients": [],
         "devices": [],
+        "ingredients": [],
         "ustensils": []
       },
       selected: {
-        "ingredients": [],
         "devices": [],
+        "ingredients": [],
         "ustensils": []
       }
     };

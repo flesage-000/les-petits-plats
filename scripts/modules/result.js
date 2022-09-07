@@ -16,7 +16,7 @@ class result {
    * Create recipe results cards.
    * @param {object} Filter Un tableau contenant les tags sélectionnés par l'utilisateur. Peut ne pas être envoyé, il ne sera alors qu'un objet vide.
    */
-  generateCard(filter = new Object()) { console.log("filter", typeof filter, filter);
+  generateCard(filter = new Object()) {
     const $container = document.querySelector(".results");
     const data = this._data;
     const filterLength = Object.keys(filter).length;
@@ -33,6 +33,7 @@ class result {
         // Clear results node
         $container.textContent = "";
       }
+      this._recipes = new recipes(recipe);
 
       if (filterLength) {
         const ingredientsFilter = filter.ingredients;
@@ -43,9 +44,9 @@ class result {
         const devicesFilterLength = devicesFilter.length;
         const ustensilsFilterLength = ustensilsFilter.length;
 
-        const recipeIngredients = recipe.ingredients;
-        const recipeDevices = recipe.appliance;
-        const recipeUstensils = recipe.ustensils;
+        const recipeIngredients = this._recipes.ingredients;
+        const recipeDevices = this._recipes.appliance;
+        const recipeUstensils = this._recipes.ustensils;
 
         let includeIngredient = false;
         if (ingredientsFilterLength >= 1) {
@@ -57,7 +58,7 @@ class result {
         let includeDevices = false;
         if (devicesFilterLength >= 1) {
           recipeDevices.forEach(recipeAppliance => {
-            if (devicesFilter.includes(recipeAppliance.appliance)) { includeDevices = true; }
+            if (devicesFilter.includes(recipeAppliance)) { includeDevices = true; }
           });
         } else { includeDevices = true; }
 
