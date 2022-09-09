@@ -1,26 +1,90 @@
 import { data } from "./data.js";
+import { recipes } from "./modules/models/recipes.js";
 
-import { search } from "./modules/search.js";
-import { tags } from "./modules/tags.js"
+// import { search } from "./modules/search.js";
+// import { tags } from "./modules/tags.js"
 import { result } from "./modules/result.js"
 
 class main {
-  constructor() {
-    this._data = data;
-    this.__result = new result(this._data);
+  constructor(data) {
+    this.data = data;
   }
 
   init() {
-    const _search = new search(this._data);
-    _search.init();
+    // Standardization of cooking recipe data.
+    let dataCleaned = this.normalizeData(this.data);
 
-    const _tags = new tags(this._data);
-    _tags.init();
+    // Add data useful for managing the cooking recipes page.
+    let dataWithOptions = this.buildDataArray(dataCleaned);
 
-    const _result = new result(this._data);
+    const _result = new result(dataWithOptions);
     _result.init();
+  }
+
+  /**
+   * Normalizes and returns raw cooking recipe data.
+   * @param {object} dataRaw The raw data of cooking recipes.
+   * @returns object
+   */
+  normalizeData(dataRaw) { // console.log("normalizeData: dataRaw", typeof dataRaw, "\r", dataRaw);
+    let newDataArray = {
+      recipes: []
+    };
+
+    dataRaw.forEach(data => {
+      let cleaner = new recipes(data);
+      let newObject = {};
+
+      newObject.appliance = cleaner.appliance;
+      newObject.description = cleaner.description;
+      newObject.id = cleaner.id;
+      newObject.ingredients = cleaner.ingredients;
+      newObject.name = cleaner.name;
+      newObject.servings = cleaner.servings;
+      newObject.time = cleaner.time;
+      newObject.ustensils = cleaner.ustensils;
+
+      newDataArray.recipes.push(newObject);
+    });
+
+    // console.log("normalizeData: return", typeof newDataArray, "\r", newDataArray);
+    return newDataArray;
+  }
+
+  /**
+   * Adds useful objects for managing the cooking recipe results page.
+   * @param {object} dataCleaned Cleaned data from cooking recipes.
+   * @return object
+   */
+  buildDataArray(dataCleaned) { // console.log("buildDataArray: dataCleaned", typeof dataCleaned, "\r", dataCleaned);
+    // Page management object.
+    let pageManagement = {
+      tags: {
+        appliances: {
+          selectable: [],
+          selected: []
+        },
+        ingredients: {
+          selectable: [],
+          selected: []
+        },
+        ustensils: {
+          selectable: [],
+          selected: []
+        }
+      }
+    };
+
+    let recipes = dataCleaned.recipes;
+    dataCleaned = {
+      recipes,
+      ...pageManagement
+    };
+
+    // console.log("buildDataArray: return", typeof dataCleaned, "\r", dataCleaned);
+    return dataCleaned;
   }
 }
 
-const _main = new main();
+const _main = new main(data);
 _main.init();

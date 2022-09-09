@@ -3,7 +3,7 @@ import { tagTpl } from "./templates/tag.js";
 import { result } from "./result.js";
 
 class tags {
-  constructor(data) {
+  constructor(data) { console.log("plop");
     this._data = data;
     this.tags = {
       toSelect: {
@@ -83,7 +83,7 @@ class tags {
       this._utils.hideShow(link.parentNode);
 
       // Refresh results
-      const _result = new result(this._data);
+      const _result = new result(this);
       _result.generateCard(this.tags.selected);
     };
 
@@ -132,7 +132,7 @@ class tags {
   /**
    * Add tags in DOM.
    */
-  add() {
+  add(filter) {
     const _tagTpl = new tagTpl();
 
     for(let tagsCollection in this.tags.toSelect) {
@@ -141,9 +141,14 @@ class tags {
       const $fragment = document.createDocumentFragment();
 
       this.tags.toSelect[tagsCollection].forEach((items, key, array) => {
-        const tpl = _tagTpl.list(items, tagsCollection);
-        $fragment.appendChild(tpl);
-        this.eventTagsSelected(tpl);
+        if (!$wrapper.hasChildNodes()) {
+          const tpl = _tagTpl.list(items, tagsCollection);
+          $fragment.appendChild(tpl);
+          this.eventTagsSelected(tpl);
+        } else {
+           console.log("this.tags.selected", this.tags.selected, this.tags.toSelect, items);
+          // this.eventTagsToSelect(items);
+        }
 
         if(array.length - 1 === key) {
           this.eventTagsToSelect(tagsCollection);

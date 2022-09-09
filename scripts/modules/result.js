@@ -1,109 +1,129 @@
-import { recipes } from "./models/recipes.js";
 import { tplRecipeCard } from "./templates/recipeCard.js";
 import { tags } from "./tags.js";
 
 class result {
+  /**
+   * @param {object} data All necessary data (recipes + options) on the results page.
+   */
   constructor(data) {
-    this._tags = new tags(data);
-    this._data = data;
+    this.data = data;
   }
 
   init() {
-    this.generateCard();
+    this.parser();
+  }
+
+  parser() {
+    /**
+     * The object containing all unfiltered recipes.
+     * @type {object}
+    */
+    const recipes = this.data.recipes;
+    const recipesLength = recipes.length; console.log("recipesLength", recipesLength);
+    /**
+     * The array of tags.
+     * @type {array}
+    */
+    let tagsSelected = this.data.tags;
+
+    /**
+     * The array of selected devices.
+     * @type {object}
+     */
+    let tagsSelectedAppliances = tagsSelected.appliances.selected;
+    /**
+     * The array length of selected devices.
+     * @type {number}
+     */
+    let tagsSelectedAppliancesLength = tagsSelectedAppliances.length;
+
+    /**
+     * The array of selected ingredients.
+     * @type {object}
+     */
+    let tagsSelectedIngredients = tagsSelected.ingredients.selected;
+    /**
+     * The array length of selected ingredients.
+     * @type {number}
+     */
+    let tagsSelectedIngredientsLength = tagsSelectedIngredients.length;
+
+    /**
+     * The array of selected ustensils.
+     * @type {object}
+     */
+    let tagsSelectedUstensils = tagsSelected.ustensils.selected;
+    /**
+     * The array length of selected ustensils.
+     * @type {number}
+     */
+    let tagsSelectedUstensilsLength = tagsSelectedUstensils.length;
+
+    recipes.forEach((recipe, key) => { console.log("recipe, key", recipe, key);
+
+      if (key == 0) {console.log("!!! TRAITEMENT COMMENCEE !!!")}
+
+      /**
+      * The array of devices in the current recipe.
+      * @type {array}
+      */
+      let currentAppliances = recipe.appliance;
+      /**
+       * Determines whether the current recipe is displayable according to its appliances.
+       * @type {boolean}
+       */
+      let currentAppliancesIsDisplayable = this.recipeIsDisplayable(currentAppliances, tagsSelectedAppliances.selected, tagsSelectedAppliancesLength);
+
+      /**
+       * The array of ingredients in the current recipe.
+       * @type {array}
+      */
+      let currentIngredients = recipe.ingredients;
+      /**
+       * Determines whether the current recipe is displayable according to its ingredients.
+       * @type {boolean}
+       */
+      let currentIngredientsIsDisplayable = this.recipeIsDisplayable(currentIngredients, tagsSelectedIngredients.selected, tagsSelectedIngredientsLength);
+
+      /**
+       * The array of ustensils in the current recipe.
+       * @type {array}
+      */
+      let currentUstensils = recipe.ustensils;
+      /**
+       * Determines whether the current recipe is displayable according to its ingredients.
+       * @type {boolean}
+       */
+      let currentUstensilsIsDisplayable = this.recipeIsDisplayable(currentUstensils, tagsSelectedUstensils.selected, tagsSelectedUstensilsLength);
+
+      if (currentAppliancesIsDisplayable && currentIngredientsIsDisplayable && currentUstensilsIsDisplayable) {
+        console.log("!!! IS DISPLAY !!!")
+
+      }
+
+      if (recipesLength - 1 == key) {console.log("!!! TRAITEMENT TERMINEE !!!")}
+    });
+  }
+
+  getTags() {
+
   }
 
   /**
-   * Create recipe results cards.
-   * @param {object} Filter Un tableau contenant les tags sélectionnés par l'utilisateur. Peut ne pas être envoyé, il ne sera alors qu'un objet vide.
+   * Determines whether the recipe can be displayed.
+   * @param {array} currentRecipeArray The table to compare.
+   * @param {array} arrayToCompare The array of data to search for.
+   * @param {integer} arrayToCompareLength The size of the array of data to search for.
+   * @returns {boolean}
    */
-  generateCard(filter = new Object()) {
-    const $container = document.querySelector(".results");
-    const data = this._data;
-    const filterLength = Object.keys(filter).length;
-    let recipeToDisplay = 0;
-    data.filter((recipe, key, data) => {
-      /**
-       * @description Generated HTML card. If null, no content has been generated.
-       * @default null
-       */
-      let $wrapper = null;
+  recipeIsDisplayable(currentRecipeArray, arrayToCompare, arrayToCompareLength) { // console.log("recipeIsDisplayable", currentRecipeArray, arrayToCompare, arrayToCompareLength)
+    /**
+      * Does the array contain the data to be searched for?
+      * @type {boolean}
+      */
+    let isInclude = currentRecipeArray.includes(arrayToCompare);
 
-      // First iteration
-      if (key == 0) {
-        // Clear results node
-        $container.textContent = "";
-      }
-      this._recipes = new recipes(recipe);
-
-      if (filterLength) {
-        const ingredientsFilter = filter.ingredients;
-        const devicesFilter = filter.devices;
-        const ustensilsFilter = filter.ustensils;
-
-        const ingredientsFilterLength = ingredientsFilter.length;
-        const devicesFilterLength = devicesFilter.length;
-        const ustensilsFilterLength = ustensilsFilter.length;
-
-        const recipeIngredients = this._recipes.ingredients;
-        const recipeDevices = this._recipes.appliance;
-        const recipeUstensils = this._recipes.ustensils;
-
-        let includeIngredient = false;
-        if (ingredientsFilterLength >= 1) {
-          recipeIngredients.forEach(recipeIngredient => {
-            if (ingredientsFilter.includes(recipeIngredient.ingredient)) { includeIngredient = true; }
-          });
-        } else { includeIngredient = true; }
-
-        let includeDevices = false;
-        if (devicesFilterLength >= 1) {
-          recipeDevices.forEach(recipeAppliance => {
-            if (devicesFilter.includes(recipeAppliance)) { includeDevices = true; }
-          });
-        } else { includeDevices = true; }
-
-        let includeUstensils = false;
-        if (ustensilsFilterLength >= 1) {
-          recipeUstensils.forEach(recipeUstensil => {
-            if (ustensilsFilter.includes(recipeUstensil)) { includeUstensils = true; }
-          });
-        } else { includeUstensils = true; }
-
-        // Generate filtered results
-        if (includeIngredient && includeDevices && includeUstensils) {
-          // recipe = new recipes(recipe);
-          const card = new tplRecipeCard(this._recipes);
-          $wrapper = card.card();
-
-          // Update tags list
-          this._tags.updateList(this._recipes.ingredients, "ingredients", ingredientsFilter);
-          this._tags.updateList(this._recipes.appliance, "devices", devicesFilter);
-          this._tags.updateList(this._recipes.ustensils, "ustensils", ustensilsFilter);
-        }
-      } else {
-        // Generate All results
-        // recipe = new recipes(recipe);
-        const card = new tplRecipeCard(this._recipes);
-        $wrapper = card.card();
-
-        // Update tags list
-        this._tags.updateList(this._recipes.ingredients, "ingredients");
-        this._tags.updateList(this._recipes.appliance, "devices");
-        this._tags.updateList(this._recipes.ustensils, "ustensils");
-      }
-
-      if ($wrapper != null) {
-        recipeToDisplay++;
-        $container.appendChild($wrapper);
-      }
-
-      // Callback
-      if (Object.is(data.length - 1, key)) {
-        // Manage CSS grid results
-        this.cssGridManager($container, recipeToDisplay);
-        this._tags.add();
-      }
-    });
+    return isInclude || !arrayToCompareLength ? true : false;
   }
 
   /**
