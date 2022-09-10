@@ -176,7 +176,7 @@ class result {
 
       if (!isInclude) {
         tagsToCompare.push(tag);
-        tagsToCompare.sort();
+        tagsToCompare.sort((a, b) => a.localeCompare(b));
       }
     });
   }
