@@ -7,6 +7,7 @@ class result {
    */
   constructor(data) {
     this.data = data;
+    this._tags = new tags();
   }
 
   init() {
@@ -19,7 +20,11 @@ class result {
      * @type {object}
     */
     const recipes = this.data.recipes;
-    const recipesLength = recipes.length; console.log("recipesLength", recipesLength);
+    /**
+     * The number of recipes available.
+     * @type {number}
+    */
+    const recipesLength = recipes.length; // console.log("recipesLength", recipesLength);
     /**
      * The array of tags.
      * @type {array}
@@ -27,15 +32,20 @@ class result {
     let tagsSelected = this.data.tags;
 
     /**
-     * The array of selected devices.
+     * The array of selected appliances.
      * @type {object}
      */
     let tagsSelectedAppliances = tagsSelected.appliances.selected;
     /**
-     * The array length of selected devices.
+     * The array length of selected appliances.
      * @type {number}
      */
     let tagsSelectedAppliancesLength = tagsSelectedAppliances.length;
+    /**
+     * The table that contains the new appliances can be filtered according to the results.
+     * @type {array}
+     */
+    let tagsSelectableAppliancesNew = [];
 
     /**
      * The array of selected ingredients.
@@ -47,6 +57,11 @@ class result {
      * @type {number}
      */
     let tagsSelectedIngredientsLength = tagsSelectedIngredients.length;
+    /**
+     * The table that contains the new ingredients can be filtered according to the results.
+     * @type {array}
+     */
+    let tagsSelectableIngredientsNew = [];
 
     /**
      * The array of selected ustensils.
@@ -58,16 +73,22 @@ class result {
      * @type {number}
      */
     let tagsSelectedUstensilsLength = tagsSelectedUstensils.length;
+    /**
+     * The table that contains the new ustensils can be filtered according to the results.
+     * @type {array}
+     */
+    let tagsSelectableUstensilsNew = [];
 
-    recipes.forEach((recipe, key) => { console.log("recipe, key", recipe, key);
+    /** Parse all recipes */
+    recipes.forEach((currentRecipe, key) => { // console.log("recipe, key", recipe, key);
 
-      if (key == 0) {console.log("!!! TRAITEMENT COMMENCEE !!!")}
+      if (key == 0) {console.log("!!! TRAITEMENT COMMENCEE !!!\r\nNouveaux Appliance: ", tagsSelectableAppliancesNew, "\r\nNouveaux Ingredients: ", tagsSelectableIngredientsNew, "\r\nNouveaux Ustensils: ", tagsSelectableUstensilsNew);}
 
       /**
       * The array of devices in the current recipe.
       * @type {array}
       */
-      let currentAppliances = recipe.appliance;
+      let currentAppliances = currentRecipe.appliance;
       /**
        * Determines whether the current recipe is displayable according to its appliances.
        * @type {boolean}
@@ -78,7 +99,7 @@ class result {
        * The array of ingredients in the current recipe.
        * @type {array}
       */
-      let currentIngredients = recipe.ingredients;
+      let currentIngredients = currentRecipe.ingredients;
       /**
        * Determines whether the current recipe is displayable according to its ingredients.
        * @type {boolean}
@@ -89,24 +110,68 @@ class result {
        * The array of ustensils in the current recipe.
        * @type {array}
       */
-      let currentUstensils = recipe.ustensils;
+      let currentUstensils = currentRecipe.ustensils;
       /**
        * Determines whether the current recipe is displayable according to its ingredients.
        * @type {boolean}
        */
       let currentUstensilsIsDisplayable = this.recipeIsDisplayable(currentUstensils, tagsSelectedUstensils.selected, tagsSelectedUstensilsLength);
 
-      if (currentAppliancesIsDisplayable && currentIngredientsIsDisplayable && currentUstensilsIsDisplayable) {
-        console.log("!!! IS DISPLAY !!!")
+      if (currentAppliancesIsDisplayable && currentIngredientsIsDisplayable && currentUstensilsIsDisplayable) { console.log("!!! IS DISPLAY !!!");
+        /**
+         * Retrieves the devices from the current recipe and adds it to an array if it isn't already there.
+         */
+        this.getTags(currentRecipe.appliance, tagsSelectableAppliancesNew);
 
+        let ingredientList = [];
+        // Because the ingredients are in separate objects, you have to extract them and put them in an array.
+        currentRecipe.ingredients.forEach(Ingredientdata => { // console.log("ingredientData", Ingredientdata.ingredient);
+          /**
+           * Retrieves the ingredients from the current recipe and adds it to an array if it isn't already there.
+           */
+          ingredientList.push(Ingredientdata.ingredient);
+        });
+        this.getTags(ingredientList, tagsSelectableIngredientsNew);
+        /**
+         * Retrieves the ustensils from the current recipe and adds it to an array if it isn't already there.
+         */
+        this.getTags(currentRecipe.ustensils, tagsSelectableUstensilsNew);
       }
 
-      if (recipesLength - 1 == key) {console.log("!!! TRAITEMENT TERMINEE !!!")}
+      /**
+       * Main foreach callback.
+       */
+      if (recipesLength - 1 == key) {console.log("!!! TRAITEMENT TERMINEE !!!\r\nNouveaux Appliance: ", tagsSelectableAppliancesNew, "\r\nNouveaux Ingredients: ", tagsSelectableIngredientsNew, "\r\nNouveaux Ustensils: ", tagsSelectableUstensilsNew);
+        /**
+         * Builds the buttons of the tags to select.
+         */
+        tagsSelectableAppliancesNew.forEach(appliance => {
+          this._tags.createLink(appliance, "appliances");
+        });
+        tagsSelectableIngredientsNew.forEach(ingredient => {
+          this._tags.createLink(ingredient, "ingredients");
+        });
+        tagsSelectableUstensilsNew.forEach(ustensil => {
+          this._tags.createLink(ustensil, "ustensils");
+        });
+      }
     });
   }
 
-  getTags() {
+  /**
+   * Determines if a value is not present in an array and, if so, adds it to an array and then orders it alphabetically.
+   * @param {array} tagsToAdd The array containing the data to add.
+   * @param {array} tagsToCompare The table of new data.
+   */
+  getTags(tagsToAdd, tagsToCompare) { // console.log("tagsToAdd, tagsToCompare", tagsToAdd, tagsToCompare);
+    tagsToAdd.forEach(tag => { // console.log("tag", tag, tagsToCompare);
+      let isInclude = tagsToCompare.includes(tag);
 
+      if (!isInclude) {
+        tagsToCompare.push(tag);
+        tagsToCompare.sort();
+      }
+    });
   }
 
   /**

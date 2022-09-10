@@ -3,7 +3,16 @@ import { tagTpl } from "./templates/tag.js";
 import { result } from "./result.js";
 
 class tags {
-  constructor(data) { console.log("plop");
+  constructor(data) {
+    this._tagTpl = new tagTpl();
+    this.cssTagsSelector = {
+      "list": {
+        "appliances": document.querySelector(".devices .row"),
+        "ingredients": document.querySelector(".ingredients .row"),
+        "ustensils": document.querySelector(".ustensils .row")
+      }
+    }
+
     this._data = data;
     this.tags = {
       toSelect: {
@@ -21,7 +30,33 @@ class tags {
     this.$selectedTagContainer = document.querySelector(".container > .tags");
   }
 
-  init() {}
+  /**
+   * Create a link for the list of selectable tags.
+   * @param {string} tagName Name of the tag to create.
+   * @param {string} tagType Type of tag to create.
+   */
+  createLink(tagName, tagType) { // console.log("createLink\r\ntagName: typeof", typeof tagName, tagName, "\r\ntagType: typeof", typeof tagType, tagType);
+    let $wrapper = this._tagTpl.list(tagName, tagType);
+
+    this.addLinkToList($wrapper, tagType);
+  }
+
+  /**
+   *  Add the link to the list of tags.
+   * @param {object} node HTML object to add to the DOM.
+   * @param {string} tagType Type of tag used by the script to know where to add the HTML object.
+   */
+  addLinkToList(node, tagType) { // console.log("addLinkToList\r\node: typeof", typeof node, node, "\r\ntagType: typeof", typeof tagType, tagType);
+    let parentNode = this.cssTagsSelector.list[tagType];
+
+    parentNode.appendChild(node);
+    // this.linkEvent(parentNode);
+  }
+
+  // linkEvent() {
+
+  // }
+
 
   /**
    * Add events for tags search
