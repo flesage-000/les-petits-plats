@@ -59,19 +59,27 @@ class main {
   buildDataArray(dataCleaned) { // console.log("buildDataArray: dataCleaned", typeof dataCleaned, "\r", dataCleaned);
     // Page management object.
     let pageManagement = {
-      tags: {
-        appliances: {
-          selectable: [],
-          selected: []
+      "tags": {
+        "appliances": {
+          "selectable": [],
+          "selected": []
         },
-        ingredients: {
-          selectable: [],
-          selected: []
+        "ingredients": {
+          "selectable": [],
+          "selected": []
         },
-        ustensils: {
-          selectable: [],
-          selected: []
+        "ustensils": {
+          "selectable": [],
+          "selected": []
         }
+      },
+      "cssSelector": {
+        "list": {
+          "devices": document.querySelector(".devices .row"),
+          "ingredients": document.querySelector(".ingredients .row"),
+          "ustensils": document.querySelector(".ustensils .row")
+        },
+        "recipe": document.querySelector(".results")
       }
     };
 

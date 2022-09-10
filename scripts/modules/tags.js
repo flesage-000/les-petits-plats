@@ -3,16 +3,9 @@ import { tagTpl } from "./templates/tag.js";
 import { result } from "./result.js";
 
 class tags {
-  constructor(resultInstance) {
-    this._result = resultInstance;
+  constructor(data) {
+    this.data = data;
     this._tagTpl = new tagTpl();
-    this.cssTagsSelector = {
-      "list": {
-        "devices": document.querySelector(".devices .row"),
-        "ingredients": document.querySelector(".ingredients .row"),
-        "ustensils": document.querySelector(".ustensils .row")
-      }
-    }
 
     // this._data = data;
     // this.tags = {
@@ -50,7 +43,7 @@ class tags {
    * @param {string} tagType Type of tag used by the script to know where to add the HTML object.
    */
   addLinkToList(node, tagType) { // console.log("addLinkToList\r\node: typeof", typeof node, node, "\r\ntagType: typeof", typeof tagType, tagType);
-    let parentNode = this.cssTagsSelector.list[tagType];
+    let parentNode = this.data.cssSelector.list[tagType];
 
     // Add link to DOM
     parentNode.appendChild(node);
@@ -61,7 +54,8 @@ class tags {
    * @param {object} node HTML node.
    */
   linkEvent(node, resultInstance) { // console.log("linkEvent\r\nnode: typeof", typeof node, node, "\r\nresultInstance:", resultInstance);
-      let func = (event) => { console.log("linkEvent event:", event, resultInstance);
+      let func = (event) => { console.log("linkEvent event:", event, resultInstance, resultInstance.data.cssSelector);
+
       // resultInstance.parser();
 
     };
@@ -74,11 +68,11 @@ class tags {
    */
   nodesCleaner() {
     // Clean devices tags links list
-    this.cssTagsSelector.list.devices.textContent = "";
+    this.data.cssSelector.list.devices.textContent = "";
     // Clean ingredients tags links list
-    this.cssTagsSelector.list.ingredients.textContent = "";
+    this.data.cssSelector.list.ingredients.textContent = "";
     // Clean ustensils tags links list
-    this.cssTagsSelector.list.ustensils.textContent = "";
+    this.data.cssSelector.list.ustensils.textContent = "";
   }
 
 

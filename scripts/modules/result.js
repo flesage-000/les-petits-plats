@@ -6,9 +6,8 @@ class result {
    * @param {object} data All necessary data (recipes + options) on the results page.
    */
   constructor(data) {
-    this.cssResultSelector = document.querySelector(".results");
     this.data = data;
-    this._tags = new tags(this);
+    this._tags = new tags(this.data);
   }
 
   init() {
@@ -203,9 +202,9 @@ class result {
    */
   nodesCleaner() {
     // Clean tags links lists
-    this._tags.nodesCleaner;
+    this._tags.nodesCleaner();
     // Clean results list
-    this.cssResultSelector.textContent = "";
+    this.data.cssSelector.recipe.textContent = "";
   }
 
   /**
