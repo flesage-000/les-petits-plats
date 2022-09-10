@@ -150,11 +150,11 @@ class result {
          */
         tagsSelectableAppliancesNew.forEach(appliance => {
           let $wrapper = this._tags.createLink(appliance, "devices");
-          this._tags.linkEvent($wrapper);
+          this._tags.linkEvent($wrapper, this);
         });
         tagsSelectableIngredientsNew.forEach(ingredient => {
           let $wrapper = this._tags.createLink(ingredient, "ingredients");
-          this._tags.linkEvent($wrapper);
+          this._tags.linkEvent($wrapper, this);
         });
         tagsSelectableUstensilsNew.forEach(ustensil => {
           let $wrapper = this._tags.createLink(ustensil, "ustensils");

@@ -56,7 +56,26 @@ class tags {
   linkEvent(node, resultInstance) { // console.log("linkEvent\r\nnode: typeof", typeof node, node, "\r\nresultInstance:", resultInstance);
       let func = (event) => { console.log("linkEvent event:", event, resultInstance, resultInstance.data.cssSelector);
 
-      // resultInstance.parser();
+      /**
+       * Event node.
+       * @type {object}
+       */
+      let node = event.target;
+      /**
+       * Get the tag name in the "data" attribute.
+       * @type {object}
+       */
+      let tagName = node.dataset.tagName;
+      /**
+       * Get the tag type in the "data" attribute.
+       * @type {object}
+       */
+      let tagType = node.dataset.tagType;
+
+      /**
+       * Adds the selected filter to the global data object.
+       */
+      this.data.tags[tagType].selected.push(tagName);
 
     };
 
