@@ -3,31 +3,32 @@ import { tagTpl } from "./templates/tag.js";
 import { result } from "./result.js";
 
 class tags {
-  constructor(data) {
+  constructor(resultInstance) {
+    this._result = resultInstance;
     this._tagTpl = new tagTpl();
     this.cssTagsSelector = {
       "list": {
-        "appliances": document.querySelector(".devices .row"),
+        "devices": document.querySelector(".devices .row"),
         "ingredients": document.querySelector(".ingredients .row"),
         "ustensils": document.querySelector(".ustensils .row")
       }
     }
 
-    this._data = data;
-    this.tags = {
-      toSelect: {
-        "devices": [],
-        "ingredients": [],
-        "ustensils": []
-      },
-      selected: {
-        "devices": [],
-        "ingredients": [],
-        "ustensils": []
-      }
-    };
-    this._utils = new utils();
-    this.$selectedTagContainer = document.querySelector(".container > .tags");
+    // this._data = data;
+    // this.tags = {
+    //   toSelect: {
+    //     "devices": [],
+    //     "ingredients": [],
+    //     "ustensils": []
+    //   },
+    //   selected: {
+    //     "devices": [],
+    //     "ingredients": [],
+    //     "ustensils": []
+    //   }
+    // };
+    // this._utils = new utils();
+    // this.$selectedTagContainer = document.querySelector(".container > .tags");
   }
 
   /**
@@ -39,23 +40,76 @@ class tags {
     let $wrapper = this._tagTpl.list(tagName, tagType);
 
     this.addLinkToList($wrapper, tagType);
+
+    return $wrapper;
   }
 
   /**
-   *  Add the link to the list of tags.
+   * Add the link to the list of tags.
    * @param {object} node HTML object to add to the DOM.
    * @param {string} tagType Type of tag used by the script to know where to add the HTML object.
    */
   addLinkToList(node, tagType) { // console.log("addLinkToList\r\node: typeof", typeof node, node, "\r\ntagType: typeof", typeof tagType, tagType);
     let parentNode = this.cssTagsSelector.list[tagType];
 
+    // Add link to DOM
     parentNode.appendChild(node);
-    // this.linkEvent(parentNode);
   }
 
-  // linkEvent() {
+  /**
+   * Add an event when clicking on the HTML node.
+   * @param {object} node HTML node.
+   */
+  linkEvent(node, resultInstance) { console.log("linkEvent\r\nnode: typeof", typeof node, node, "\r\nresultInstance:", resultInstance);
+      let func = (event) => { console.log("linkEvent event:", event, resultInstance);
+      // resultInstance.parser();
 
-  // }
+    };
+
+    node.addEventListener("click", func);
+  }
+
+  /**
+   * Clean links list HTML nodes
+   */
+  nodesCleaner() {
+    // Clean devices tags links list
+    this.cssTagsSelector.list.devices.textContent = "";
+    // Clean ingredients tags links list
+    this.cssTagsSelector.list.ingredients.textContent = "";
+    // Clean ustensils tags links list
+    this.cssTagsSelector.list.ustensils.textContent = "";
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
   /**

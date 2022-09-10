@@ -6,8 +6,9 @@ class result {
    * @param {object} data All necessary data (recipes + options) on the results page.
    */
   constructor(data) {
+    this.cssResultSelector = document.querySelector(".results");
     this.data = data;
-    this._tags = new tags();
+    this._tags = new tags(this);
   }
 
   init() {
@@ -15,6 +16,9 @@ class result {
   }
 
   parser() {
+    // Clear dynamics nodes
+    this.nodesCleaner();
+
     /**
      * The object containing all unfiltered recipes.
      * @type {object}
@@ -42,7 +46,7 @@ class result {
      */
     let tagsSelectedAppliancesLength = tagsSelectedAppliances.length;
     /**
-     * The table that contains the new appliances can be filtered according to the results.
+     * The array that contains the new appliances can be filtered according to the results.
      * @type {array}
      */
     let tagsSelectableAppliancesNew = [];
@@ -58,7 +62,7 @@ class result {
      */
     let tagsSelectedIngredientsLength = tagsSelectedIngredients.length;
     /**
-     * The table that contains the new ingredients can be filtered according to the results.
+     * The array that contains the new ingredients can be filtered according to the results.
      * @type {array}
      */
     let tagsSelectableIngredientsNew = [];
@@ -74,7 +78,7 @@ class result {
      */
     let tagsSelectedUstensilsLength = tagsSelectedUstensils.length;
     /**
-     * The table that contains the new ustensils can be filtered according to the results.
+     * The array that contains the new ustensils can be filtered according to the results.
      * @type {array}
      */
     let tagsSelectableUstensilsNew = [];
@@ -141,18 +145,21 @@ class result {
       /**
        * Main foreach callback.
        */
-      if (recipesLength - 1 == key) {console.log("!!! TRAITEMENT TERMINEE !!!\r\nNouveaux Appliance: ", tagsSelectableAppliancesNew, "\r\nNouveaux Ingredients: ", tagsSelectableIngredientsNew, "\r\nNouveaux Ustensils: ", tagsSelectableUstensilsNew);
+      if (recipesLength - 1 == key) { console.log("!!! TRAITEMENT TERMINEE !!!\r\nNouveaux Appliance: ", tagsSelectableAppliancesNew, "\r\nNouveaux Ingredients: ", tagsSelectableIngredientsNew, "\r\nNouveaux Ustensils: ", tagsSelectableUstensilsNew);
         /**
          * Builds the buttons of the tags to select.
          */
         tagsSelectableAppliancesNew.forEach(appliance => {
-          this._tags.createLink(appliance, "appliances");
+          let $wrapper = this._tags.createLink(appliance, "devices");
+          this._tags.linkEvent($wrapper);
         });
         tagsSelectableIngredientsNew.forEach(ingredient => {
-          this._tags.createLink(ingredient, "ingredients");
+          let $wrapper = this._tags.createLink(ingredient, "ingredients");
+          this._tags.linkEvent($wrapper);
         });
         tagsSelectableUstensilsNew.forEach(ustensil => {
-          this._tags.createLink(ustensil, "ustensils");
+          let $wrapper = this._tags.createLink(ustensil, "ustensils");
+          this._tags.linkEvent($wrapper, this);
         });
       }
     });
@@ -161,7 +168,7 @@ class result {
   /**
    * Determines if a value is not present in an array and, if so, adds it to an array and then orders it alphabetically.
    * @param {array} tagsToAdd The array containing the data to add.
-   * @param {array} tagsToCompare The table of new data.
+   * @param {array} tagsToCompare The array of new data.
    */
   getTags(tagsToAdd, tagsToCompare) { // console.log("tagsToAdd, tagsToCompare", tagsToAdd, tagsToCompare);
     tagsToAdd.forEach(tag => { // console.log("tag", tag, tagsToCompare);
@@ -176,7 +183,7 @@ class result {
 
   /**
    * Determines whether the recipe can be displayed.
-   * @param {array} currentRecipeArray The table to compare.
+   * @param {array} currentRecipeArray The array to compare.
    * @param {array} arrayToCompare The array of data to search for.
    * @param {integer} arrayToCompareLength The size of the array of data to search for.
    * @returns {boolean}
@@ -189,6 +196,16 @@ class result {
     let isInclude = currentRecipeArray.includes(arrayToCompare);
 
     return isInclude || !arrayToCompareLength ? true : false;
+  }
+
+  /**
+   * Clear HTML nodes.
+   */
+  nodesCleaner() {
+    // Clean tags links lists
+    this._tags.nodesCleaner;
+    // Clean results list
+    this.cssResultSelector.textContent = "";
   }
 
   /**
