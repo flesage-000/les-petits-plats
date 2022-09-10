@@ -60,7 +60,7 @@ class tags {
    * Add an event when clicking on the HTML node.
    * @param {object} node HTML node.
    */
-  linkEvent(node, resultInstance) { console.log("linkEvent\r\nnode: typeof", typeof node, node, "\r\nresultInstance:", resultInstance);
+  linkEvent(node, resultInstance) { // console.log("linkEvent\r\nnode: typeof", typeof node, node, "\r\nresultInstance:", resultInstance);
       let func = (event) => { console.log("linkEvent event:", event, resultInstance);
       // resultInstance.parser();
 
