@@ -23,7 +23,7 @@
   --dark: #343a40;
   --black: #000;
   --ingredients: #3282F7;
-  --devices: #68D9A4;
+  --appliances: #68D9A4;
   --mercury: #E7E7E7;
   --ustensils: #ED6454;
   --card-header: #C7BEBE;
@@ -1714,23 +1714,23 @@ pre code {
   background-color: #adcdfc;
 }
 
-.table-devices,
-.table-devices > th,
-.table-devices > td {
+.table-appliances,
+.table-appliances > th,
+.table-appliances > td {
   background-color: #d5f4e6;
 }
-.table-devices th,
-.table-devices td,
-.table-devices thead th,
-.table-devices tbody + tbody {
+.table-appliances th,
+.table-appliances td,
+.table-appliances thead th,
+.table-appliances tbody + tbody {
   border-color: #b0ebd0;
 }
 
-.table-hover .table-devices:hover {
+.table-hover .table-appliances:hover {
   background-color: #c1efda;
 }
-.table-hover .table-devices:hover > td,
-.table-hover .table-devices:hover > th {
+.table-hover .table-appliances:hover > td,
+.table-hover .table-appliances:hover > th {
   background-color: #c1efda;
 }
 
@@ -2702,33 +2702,33 @@ fieldset:disabled a.btn {
   box-shadow: 0 0 0 0.2rem rgba(81, 149, 248, 0.5);
 }
 
-.btn-devices {
+.btn-appliances {
   color: #212529;
   background-color: #68D9A4;
   border-color: #68D9A4;
 }
-.btn-devices:hover {
+.btn-appliances:hover {
   color: #212529;
   background-color: #49d192;
   border-color: #3fcf8b;
 }
-.btn-devices:focus, .btn-devices.focus {
+.btn-appliances:focus, .btn-appliances.focus {
   color: #212529;
   background-color: #49d192;
   border-color: #3fcf8b;
   box-shadow: 0 0 0 0.2rem rgba(93, 190, 146, 0.5);
 }
-.btn-devices.disabled, .btn-devices:disabled {
+.btn-appliances.disabled, .btn-appliances:disabled {
   color: #212529;
   background-color: #68D9A4;
   border-color: #68D9A4;
 }
-.btn-devices:not(:disabled):not(.disabled):active, .btn-devices:not(:disabled):not(.disabled).active, .show > .btn-devices.dropdown-toggle {
+.btn-appliances:not(:disabled):not(.disabled):active, .btn-appliances:not(:disabled):not(.disabled).active, .show > .btn-appliances.dropdown-toggle {
   color: #212529;
   background-color: #3fcf8b;
   border-color: #35cc85;
 }
-.btn-devices:not(:disabled):not(.disabled):active:focus, .btn-devices:not(:disabled):not(.disabled).active:focus, .show > .btn-devices.dropdown-toggle:focus {
+.btn-appliances:not(:disabled):not(.disabled):active:focus, .btn-appliances:not(:disabled):not(.disabled).active:focus, .show > .btn-appliances.dropdown-toggle:focus {
   box-shadow: 0 0 0 0.2rem rgba(93, 190, 146, 0.5);
 }
 
@@ -3102,28 +3102,28 @@ fieldset:disabled a.btn {
   box-shadow: 0 0 0 0.2rem rgba(50, 130, 247, 0.5);
 }
 
-.btn-outline-devices {
+.btn-outline-appliances {
   color: #68D9A4;
   border-color: #68D9A4;
 }
-.btn-outline-devices:hover {
+.btn-outline-appliances:hover {
   color: #212529;
   background-color: #68D9A4;
   border-color: #68D9A4;
 }
-.btn-outline-devices:focus, .btn-outline-devices.focus {
+.btn-outline-appliances:focus, .btn-outline-appliances.focus {
   box-shadow: 0 0 0 0.2rem rgba(104, 217, 164, 0.5);
 }
-.btn-outline-devices.disabled, .btn-outline-devices:disabled {
+.btn-outline-appliances.disabled, .btn-outline-appliances:disabled {
   color: #68D9A4;
   background-color: transparent;
 }
-.btn-outline-devices:not(:disabled):not(.disabled):active, .btn-outline-devices:not(:disabled):not(.disabled).active, .show > .btn-outline-devices.dropdown-toggle {
+.btn-outline-appliances:not(:disabled):not(.disabled):active, .btn-outline-appliances:not(:disabled):not(.disabled).active, .show > .btn-outline-appliances.dropdown-toggle {
   color: #212529;
   background-color: #68D9A4;
   border-color: #68D9A4;
 }
-.btn-outline-devices:not(:disabled):not(.disabled):active:focus, .btn-outline-devices:not(:disabled):not(.disabled).active:focus, .show > .btn-outline-devices.dropdown-toggle:focus {
+.btn-outline-appliances:not(:disabled):not(.disabled):active:focus, .btn-outline-appliances:not(:disabled):not(.disabled).active:focus, .show > .btn-outline-appliances.dropdown-toggle:focus {
   box-shadow: 0 0 0 0.2rem rgba(104, 217, 164, 0.5);
 }
 
@@ -5199,15 +5199,15 @@ a.badge-ingredients:focus, a.badge-ingredients.focus {
   box-shadow: 0 0 0 0.2rem rgba(50, 130, 247, 0.5);
 }
 
-.badge-devices {
+.badge-appliances {
   color: #212529;
   background-color: #68D9A4;
 }
-a.badge-devices:hover, a.badge-devices:focus {
+a.badge-appliances:hover, a.badge-appliances:focus {
   color: #212529;
   background-color: #3fcf8b;
 }
-a.badge-devices:focus, a.badge-devices.focus {
+a.badge-appliances:focus, a.badge-appliances.focus {
   outline: 0;
   box-shadow: 0 0 0 0.2rem rgba(104, 217, 164, 0.5);
 }
@@ -5430,15 +5430,15 @@ a.badge-card-body:focus, a.badge-card-body.focus {
   color: #112d56;
 }
 
-.alert-devices {
+.alert-appliances {
   color: #367155;
   background-color: #e1f7ed;
   border-color: #d5f4e6;
 }
-.alert-devices hr {
+.alert-appliances hr {
   border-top-color: #c1efda;
 }
-.alert-devices .alert-link {
+.alert-appliances .alert-link {
   color: #264e3b;
 }
 
@@ -5886,15 +5886,15 @@ a.badge-card-body:focus, a.badge-card-body.focus {
   border-color: #1a4480;
 }
 
-.list-group-item-devices {
+.list-group-item-appliances {
   color: #367155;
   background-color: #d5f4e6;
 }
-.list-group-item-devices.list-group-item-action:hover, .list-group-item-devices.list-group-item-action:focus {
+.list-group-item-appliances.list-group-item-action:hover, .list-group-item-appliances.list-group-item-action:focus {
   color: #367155;
   background-color: #c1efda;
 }
-.list-group-item-devices.list-group-item-action.active {
+.list-group-item-appliances.list-group-item-action.active {
   color: #fff;
   background-color: #367155;
   border-color: #367155;
@@ -6841,13 +6841,13 @@ button.bg-ingredients:focus {
   background-color: #0966ed !important;
 }
 
-.bg-devices {
+.bg-appliances {
   background-color: #68D9A4 !important;
 }
 
-a.bg-devices:hover, a.bg-devices:focus,
-button.bg-devices:hover,
-button.bg-devices:focus {
+a.bg-appliances:hover, a.bg-appliances:focus,
+button.bg-appliances:hover,
+button.bg-appliances:focus {
   background-color: #3fcf8b !important;
 }
 
@@ -6979,7 +6979,7 @@ button.bg-card-body:focus {
   border-color: #3282F7 !important;
 }
 
-.border-devices {
+.border-appliances {
   border-color: #68D9A4 !important;
 }
 
@@ -10076,11 +10076,11 @@ a.text-ingredients:hover, a.text-ingredients:focus {
   color: #085bd4 !important;
 }
 
-.text-devices {
+.text-appliances {
   color: #68D9A4 !important;
 }
 
-a.text-devices:hover, a.text-devices:focus {
+a.text-appliances:hover, a.text-appliances:focus {
   color: #31c37f !important;
 }
 

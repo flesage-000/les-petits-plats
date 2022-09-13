@@ -54,7 +54,12 @@ class tags {
    * @param {object} node HTML node.
    */
   linkEvent(node, resultInstance) { // console.log("linkEvent\r\nnode: typeof", typeof node, node, "\r\nresultInstance:", resultInstance);
-      let func = (event) => { console.log("linkEvent event:", event, resultInstance, resultInstance.data.cssSelector);
+
+      /**
+       * The event that occurs when clicking on a tag to select.
+       * @param {function} event
+       */
+      let func = (event) => { // console.log("linkEvent event:", event, resultInstance, resultInstance.data.cssSelector);
 
       /**
        * Event node.
@@ -77,6 +82,7 @@ class tags {
        */
       this.data.tags[tagType].selected.push(tagName);
 
+      resultInstance.parser();
     };
 
     node.addEventListener("click", func);
@@ -87,7 +93,7 @@ class tags {
    */
   nodesCleaner() {
     // Clean devices tags links list
-    this.data.cssSelector.list.devices.textContent = "";
+    this.data.cssSelector.list.appliances.textContent = "";
     // Clean ingredients tags links list
     this.data.cssSelector.list.ingredients.textContent = "";
     // Clean ustensils tags links list

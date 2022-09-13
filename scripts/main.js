@@ -1,4 +1,4 @@
-import { data } from "./data.js";
+import { data, filter, TESTDATA } from "./data.js";
 import { recipes } from "./modules/models/recipes.js";
 
 // import { search } from "./modules/search.js";
@@ -75,7 +75,7 @@ class main {
       },
       "cssSelector": {
         "list": {
-          "devices": document.querySelector(".devices .row"),
+          "appliances": document.querySelector(".appliances .row"),
           "ingredients": document.querySelector(".ingredients .row"),
           "ustensils": document.querySelector(".ustensils .row")
         },
@@ -94,5 +94,5 @@ class main {
   }
 }
 
-const _main = new main(data);
+const _main = new main(TESTDATA);
 _main.init();

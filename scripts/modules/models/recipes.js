@@ -141,6 +141,7 @@ class recipes {
         case "Mayonnaise":
         case "Menthe":
           // currentName = "";
+          break;
         case "Moutarde de dijon":
           currentName = "Moutarde de Dijon";
           break;
