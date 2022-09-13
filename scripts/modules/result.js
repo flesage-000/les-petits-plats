@@ -153,6 +153,7 @@ class result {
       let selectedAppliances = this._tags.data.tags.appliances.selected;
       /** @type {boolean} The boolean determining if the current recipe contains the selected appliances or not. Default value "false". */
       let hasAppliancesFilter = false;
+      // Tests if the array contains at least one value and, if so, checks if the "appliances" tags of the current recipe are present.
       if (selectedAppliances.length >= 1) hasAppliancesFilter = selectedAppliances.every(filter => { return currentAppliances.includes(filter); });
 
       /** @type {array} The array of ingredients in the current recipe. */
@@ -161,7 +162,8 @@ class result {
       let selectedIngredients = this._tags.data.tags.ingredients.selected;
       /** @type {boolean} The boolean determining if the current recipe contains the selected ingredients or not. Default value "false". */
       let hasIngredientsFilter = false;
-      if (selectedIngredients.length >= 1) hasIngredientsFilter = selectedIngredients.every(filter => { return currentIngredients.includes(filter); });
+      // Tests if the array contains at least one value and, if so, checks if the "ingredients" tags of the current recipe are present.
+      if (selectedIngredients.length >= 1) hasIngredientsFilter = selectedIngredients.every(filter => { return currentIngredients.find(current => { if (current.ingredient == filter) return true; }); });
 
       /** @type {array} The array of ustensils in the current recipe. */
       let currentUstensils = currentRecipe.ustensils;
@@ -169,6 +171,7 @@ class result {
       let selectedUstensils = this._tags.data.tags.ustensils.selected
       /** @type {boolean} The boolean determining if the current recipe contains the selected ustensils or not. Default value "false". */
       let hasUstensilsFilter = false;
+      // Tests if the array contains at least one value and, if so, checks if the "ustensils" tags of the current recipe are present.
       if (selectedUstensils.length >= 1) hasUstensilsFilter = selectedUstensils.every(filter => { return currentUstensils.includes(filter); });
 
       return hasAppliancesFilter || hasIngredientsFilter || hasUstensilsFilter ? true : false;
