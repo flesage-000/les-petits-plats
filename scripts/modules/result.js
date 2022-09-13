@@ -105,6 +105,8 @@ class result {
    */
   recipeIsDisplayable(currentRecipe) { console.log("recipeIsDisplayable\r\n- currentRecipe:", typeof currentRecipe, currentRecipe, "\r\n - this", this);
 
+    /** @type {boolean} Globally determines whether the current recipe is displayable or not. Default value "false". */
+    let isDisplayable = false;
     /** @type {string} The user's search value in the main search field. */
     let mainSearch = this.data.manualSearch;
     /** @type {array} The length of array of selected appliances. */
@@ -124,65 +126,102 @@ class result {
     /**
      * CASE #2 One or more filter(s) have been selected.
      */
-    if (hasTagSelected >= 1 && !mainSearch) { console.log(`CASE #2`);
-      /** @type {array} The array of devices in the current recipe. */
-      let currentAppliances = currentRecipe.appliance;
-      /** @type {array} The array of selected appliances. */
-      let selectedAppliances = this._tags.data.tags.appliances.selected;
-      /** @type {boolean} The boolean determining if the current recipe contains the selected appliances or not. Default value "false". */
-      let hasAppliancesFilter = false;
-
-      // Tests if the array contains at least one value and, if so, checks if the "appliances" tags of the current recipe are present.
-      if (selectedAppliances.length >= 1) hasAppliancesFilter = selectedAppliances.every(filter => { return currentAppliances.includes(filter); });
-
-      /** @type {array} The array of ingredients in the current recipe. */
-      let currentIngredients = currentRecipe.ingredients;
-      /** @type {array} The array of selected ingredients. */
-      let selectedIngredients = this._tags.data.tags.ingredients.selected;
-      /** @type {boolean} The boolean determining if the current recipe contains the selected ingredients or not. Default value "false". */
-      let hasIngredientsFilter = false;
-
-      // Tests if the array contains at least one value and, if so, checks if the "ingredients" tags of the current recipe are present.
-      if (selectedIngredients.length >= 1) hasIngredientsFilter = selectedIngredients.every(filter => { return currentIngredients.find(current => { if (current.ingredient == filter) return true; }); });
-
-      /** @type {array} The array of ustensils in the current recipe. */
-      let currentUstensils = currentRecipe.ustensils;
-      /** @type {array} The array of selected ustensils. */
-      let selectedUstensils = this._tags.data.tags.ustensils.selected
-      /** @type {boolean} The boolean determining if the current recipe contains the selected ustensils or not. Default value "false". */
-      let hasUstensilsFilter = false;
-
-      // Tests if the array contains at least one value and, if so, checks if the "ustensils" tags of the current recipe are present.
-      if (selectedUstensils.length >= 1) hasUstensilsFilter = selectedUstensils.every(filter => { return currentUstensils.includes(filter); });
-
-      return hasAppliancesFilter || hasIngredientsFilter || hasUstensilsFilter ? true : false;
+    if (hasTagSelected >= 1 && !mainSearch) { console.log(`CASE #2`, currentRecipe);
+      isDisplayable = this.caseTagsOnly(currentRecipe);
     }
 
     /**
      * CASE #3 The user performed a manual search in the main search field.
      */
-    if (mainSearch) { console.log("CASE #3", currentRecipe);
-      let mainSearchTLC = mainSearch.toLowerCase();
-
-      /** Normalizes the current recipe name to lowercase. */
-      let recipeNameTLC = currentRecipe.name.toLowerCase();
-      /** Determines if the search term is in the name of the current recipe. */
-      if (recipeNameTLC.indexOf(mainSearchTLC) >= 0) return true;
-
-      /** Normalizes the current recipe description to lowercase. */
-      let recipeDescriptionTLC = currentRecipe.description.toLowerCase();
-      /** Determines if the search term is in the description of the current recipe. */
-      if (recipeDescriptionTLC.indexOf(mainSearchTLC) >= 0)  return true;
-
-      /** Retrieves the table of ingredients for the current recipe. */
-      let recipeIngredients = currentRecipe.ingredients;
-      recipeIngredients.forEach(ingredient => {
-        /** Normalizes the current ingredient name to lowercase. */
-        let ingredientTLC = ingredient.ingredient.toLowerCase();
-        /** Determines if the search term is in the ingredient of the current recipe. */
-        if (ingredientTLC.indexOf(mainSearchTLC) >= 0) return true;
-      });
+    if (mainSearch && hasTagSelected == 0) { console.log("CASE #3", currentRecipe);
+      isDisplayable = this.caseMainSearchOnly(currentRecipe, mainSearch);
     }
+
+    /**
+     * CASE #4 The user performed a manual search in the main search field AND also selected at least one tag.
+     */
+    if (mainSearch && hasTagSelected >= 1) { console.log("CASE #4", currentRecipe);
+      isDisplayable = this.caseMainSearchPlusTags(currentRecipe, mainSearch);
+    }
+
+    return isDisplayable;
+  }
+
+  caseMainSearchPlusTags(currentRecipe, mainSearch) { // console.log("caseMainSearchPlusTags: ", currentRecipe, mainSearch);
+    let hasTags = this.caseTagsOnly(currentRecipe);
+    let hasTerms = this.caseMainSearchOnly(currentRecipe, mainSearch);
+
+    return hasTags && hasTerms ? true : false;
+  }
+
+  /**
+   * Determines if the recipe contains the tag(s).
+   * @param {object} currentRecipe The current recipe.
+   * @returns boolean
+   */
+  caseTagsOnly(currentRecipe) { // console.log("caseTagsOnly", currentRecipe);
+    /** @type {array} The array of devices in the current recipe. */
+    let currentAppliances = currentRecipe.appliance;
+    /** @type {array} The array of selected appliances. */
+    let selectedAppliances = this._tags.data.tags.appliances.selected;
+    /** @type {boolean} The boolean determining if the current recipe contains the selected appliances or not. Default value "false". */
+    let hasAppliancesFilter = false;
+
+    // Tests if the array contains at least one value and, if so, checks if the "appliances" tags of the current recipe are present.
+    if (selectedAppliances.length >= 1) hasAppliancesFilter = selectedAppliances.every(filter => { return currentAppliances.includes(filter); });
+
+    /** @type {array} The array of ingredients in the current recipe. */
+    let currentIngredients = currentRecipe.ingredients;
+    /** @type {array} The array of selected ingredients. */
+    let selectedIngredients = this._tags.data.tags.ingredients.selected;
+    /** @type {boolean} The boolean determining if the current recipe contains the selected ingredients or not. Default value "false". */
+    let hasIngredientsFilter = false;
+
+    // Tests if the array contains at least one value and, if so, checks if the "ingredients" tags of the current recipe are present.
+    if (selectedIngredients.length >= 1) hasIngredientsFilter = selectedIngredients.every(filter => { return currentIngredients.find(current => { if (current.ingredient == filter) return true; }); });
+
+    /** @type {array} The array of ustensils in the current recipe. */
+    let currentUstensils = currentRecipe.ustensils;
+    /** @type {array} The array of selected ustensils. */
+    let selectedUstensils = this._tags.data.tags.ustensils.selected
+    /** @type {boolean} The boolean determining if the current recipe contains the selected ustensils or not. Default value "false". */
+    let hasUstensilsFilter = false;
+
+    // Tests if the array contains at least one value and, if so, checks if the "ustensils" tags of the current recipe are present.
+    if (selectedUstensils.length >= 1) hasUstensilsFilter = selectedUstensils.every(filter => { return currentUstensils.includes(filter); });
+
+    return hasAppliancesFilter || hasIngredientsFilter || hasUstensilsFilter ? true : false;
+  }
+
+  /**
+   * Determines if the recipe contains the search term(s).
+   * @param {object} currentRecipe The current recipe.
+   * @param {string} mainSearch Term searched by the user.
+   * @returns boolean
+   */
+  caseMainSearchOnly(currentRecipe, mainSearch) { // console.log("caseMainSearchOnly", currentRecipe, mainSearch);
+    let mainSearchTLC = mainSearch.toLowerCase();
+
+    /** Normalizes the current recipe name to lowercase. */
+    let recipeNameTLC = currentRecipe.name.toLowerCase();
+    /** Determines if the search term is in the name of the current recipe. */
+    if (recipeNameTLC.indexOf(mainSearchTLC) >= 0) return true;
+
+    /** Normalizes the current recipe description to lowercase. */
+    let recipeDescriptionTLC = currentRecipe.description.toLowerCase();
+    /** Determines if the search term is in the description of the current recipe. */
+    if (recipeDescriptionTLC.indexOf(mainSearchTLC) >= 0)  return true;
+
+    /** Retrieves the table of ingredients for the current recipe. */
+    let recipeIngredients = currentRecipe.ingredients;
+    recipeIngredients.forEach(ingredient => {
+      /** Normalizes the current ingredient name to lowercase. */
+      let ingredientTLC = ingredient.ingredient.toLowerCase();
+      /** Determines if the search term is in the ingredient of the current recipe. */
+      if (ingredientTLC.indexOf(mainSearchTLC) >= 0) return true;
+    });
+
+    return false;
   }
 
   /** Clear HTML nodes. */
