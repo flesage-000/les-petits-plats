@@ -1,7 +1,6 @@
 import { data, filter, TESTDATA } from "./data.js";
 import { recipes } from "./modules/models/recipes.js";
 
-// import { search } from "./modules/search.js";
 // import { tags } from "./modules/tags.js"
 import { result } from "./modules/result.js"
 
@@ -59,20 +58,6 @@ class main {
   buildDataArray(dataCleaned) { // console.log("buildDataArray: dataCleaned", typeof dataCleaned, "\r", dataCleaned);
     // Page management object.
     let pageManagement = {
-      "tags": {
-        "appliances": {
-          "selectable": [],
-          "selected": []
-        },
-        "ingredients": {
-          "selectable": [],
-          "selected": []
-        },
-        "ustensils": {
-          "selectable": [],
-          "selected": []
-        }
-      },
       "cssSelector": {
         "list": {
           "appliances": document.querySelector(".appliances .row"),
@@ -80,6 +65,18 @@ class main {
           "ustensils": document.querySelector(".ustensils .row")
         },
         "recipe": document.querySelector(".results")
+      },
+      "manualSearch": null,
+      "tags": {
+        "appliances": {
+          "selected": []
+        },
+        "ingredients": {
+          "selected": []
+        },
+        "ustensils": {
+          "selected": []
+        }
       }
     };
 
