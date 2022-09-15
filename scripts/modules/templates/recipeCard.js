@@ -19,7 +19,7 @@ class tplRecipeCard {
 
           <div class="preparation col">
             <p>
-              ${recipe._description}
+              ${recipe.description}
             </p>
           </div>
         </div>

@@ -91,5 +91,5 @@ class main {
   }
 }
 
-const _main = new main(TESTDATA);
+const _main = new main(data);
 _main.init();
