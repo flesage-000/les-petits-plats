@@ -122,7 +122,7 @@ class tags {
   linkEvent(node, resultInstance) { // console.log("linkEvent\r\nnode: typeof", typeof node, node, "\r\nresultInstance:", resultInstance);
 
       /** @param {function} event The event that occurs when clicking on a tag to select. */
-      let func = (event) => { console.log("linkEvent event:", event, resultInstance, resultInstance.data.cssSelector);
+      let func = (event) => { // console.log("linkEvent event:", event, resultInstance, resultInstance.data.cssSelector);
 
       /** @type {object} Event node. */
       let node = event.target;
@@ -135,7 +135,7 @@ class tags {
       this.data.tags[tagType].selected.push(tagName);
 
       /** Adds the button to the list of selected tags. */
-      this.addButtonToList(tagName, tagType);
+      this.addButtonToList(tagName, tagType, resultInstance);
 
       resultInstance.parser();
     };
@@ -148,13 +148,43 @@ class tags {
    * @param {string} tagName The name of the tag.
    * @param {string} tagType The category of the tag.
    */
-  addButtonToList(tagName, tagType) { // console.log("addButtonToList:\r\n- tagName:", typeof tagName, tagName, "\r\n- tagType:", typeof tagType, tagType);
+  addButtonToList(tagName, tagType, resultInstance) { // console.log("addButtonToList:\r\n- tagName:", typeof tagName, tagName, "\r\n- tagType:", typeof tagType, tagType);
     /** @type {object} The node to add to the DOM. */
     let $wrapper = this._tagTpl.button(tagName, tagType);
     /** @type {object} The tag button container. */
     let buttonTagsContainer = document.querySelector(".tags");
 
+    /** Add button to the DOM. */
     buttonTagsContainer.appendChild($wrapper);
+
+    /** Add an event on the button. */
+    this.addButtonToListEvent(buttonTagsContainer.lastChild, resultInstance);
+  }
+
+  addButtonToListEvent(node, resultInstance) { // console.log("addButtonToListEvent:\r\n- node:", typeof node, node);
+    let func = (ev) => {
+
+      /** @type {object} Event node. */
+      let node = ev.target;
+      /** @type {object} Get the tag name in the "data" attribute. */
+      let tagName = node.dataset.tagName;
+      /** @type {object} Get the tag type in the "data" attribute. */
+      let tagType = node.dataset.tagType;
+
+      /** @type {array} The array of selected tags. */
+      let currentArray = this.data.tags[tagType].selected;
+      /** @type {array} The array of selected tags without the deleted tag. */
+      let filtered = currentArray.filter(tag => {
+        return tag != tagName;
+      });
+
+      currentArray = filtered;
+
+      node.remove();
+
+      resultInstance.parser();
+    }
+    node.addEventListener("click", func);
   }
 
   /**
