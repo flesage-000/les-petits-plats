@@ -24,6 +24,15 @@ class tags {
     // this.$selectedTagContainer = document.querySelector(".container > .tags");
   }
 
+  init() {
+    /** Ingredient tag research input. */
+    this.searchInTagsEvent(document.querySelector("#searchIngredients"));
+    /** Appliance tag research input. */
+    this.searchInTagsEvent(document.querySelector("#searchAppliances"));
+    /** Ustensil tag research input. */
+    this.searchInTagsEvent(document.querySelector("#searchUstensils"));
+  }
+
   /**
    * Create a link for the list of selectable tags.
    * @param {string} tagName Name of the tag to create.
@@ -35,6 +44,63 @@ class tags {
     this.addLinkToList($wrapper, tagType);
 
     return $wrapper;
+  }
+
+  /**
+   * Event during manual search in the tag input.
+   */
+  searchInTagsEvent(input) { console.log("searchInTagsEvent:\r\n- input", input);
+    let _utils = new utils();
+    /** @type {string} The user action that causes the event. */
+    let event = "keyup";
+    /** @type {function} The function caused by the event. */
+    let func = (ev) => {
+      /** @type {(boolean|string)} The value of the input. If the script cannot continue its value will be "false" otherwise it contains the user's search terms. */
+      let searchIsValid = _utils.checkInputValue(ev.target.value);
+
+      /** Determines if the conditions are sufficient to continue the script. */
+      if (searchIsValid === false) {
+        /** The filtering conditions are not met, so we redisplay all the tags. */
+        this.searchInTags(ev.target, searchIsValid, true);
+        /** Stop script. */
+        return;
+      }
+      /** Tags are filtered. */
+      this.searchInTags(ev.target, searchIsValid);
+    };
+
+    input.addEventListener(event, func);
+  }
+
+  /**
+   * Whether or not to display tags depending on the content of the tag input.
+   * @param {object} node The tag search input.
+   * @param {string} valueToSearch The value of the input.
+   * @param {boolean} reset Determine whether to display tags. Default value "false".
+   */
+  searchInTags(node, valueToSearch, reset = false) { // console.log("searchInTags:\r\n- node:", typeof node, node, "\r\n- valueToSearch:", typeof valueToSearch, valueToSearch, document.querySelector("#" + node.id), "\r\n- reset:", typeof reset, reset);
+    /** @type {object} The tag container. */
+    let tagsContainer = () => {
+      /** @type {object} The tag search input. */
+      let input = document.querySelector("#" + node.id);
+      /** @type {object} The parent tag search input. */
+      let parentNode = input.parentNode;
+      /** @type {object} Parents from the list of selectable tags. */
+      let tagsMainContainer = parentNode.querySelector(".tags");
+
+      return tagsMainContainer.querySelector(".row");
+    }
+    /** @type {array} Container tags. */
+    let tags = tagsContainer().querySelectorAll(".dropdown-item");
+
+    /** Loop to display or not the tags. */
+    tags.forEach(tag => {
+      if (tag.dataset.tagName.toLowerCase().includes(valueToSearch) || reset) {
+        tag.parentNode.style.display = "";
+      } else {
+        tag.parentNode.style.display = "none";
+      }
+    });
   }
 
   /**
@@ -55,31 +121,17 @@ class tags {
    */
   linkEvent(node, resultInstance) { // console.log("linkEvent\r\nnode: typeof", typeof node, node, "\r\nresultInstance:", resultInstance);
 
-      /**
-       * The event that occurs when clicking on a tag to select.
-       * @param {function} event
-       */
+      /** @param {function} event The event that occurs when clicking on a tag to select. */
       let func = (event) => { // console.log("linkEvent event:", event, resultInstance, resultInstance.data.cssSelector);
 
-      /**
-       * Event node.
-       * @type {object}
-       */
+      /** @type {object} Event node. */
       let node = event.target;
-      /**
-       * Get the tag name in the "data" attribute.
-       * @type {object}
-       */
+      /** @type {object} Get the tag name in the "data" attribute. */
       let tagName = node.dataset.tagName;
-      /**
-       * Get the tag type in the "data" attribute.
-       * @type {object}
-       */
+      /** @type {object} Get the tag type in the "data" attribute. */
       let tagType = node.dataset.tagType;
 
-      /**
-       * Adds the selected filter to the global data object.
-       */
+      /** Adds the selected filter to the global data object. */
       this.data.tags[tagType].selected.push(tagName);
 
       resultInstance.parser();

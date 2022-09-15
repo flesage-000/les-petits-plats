@@ -17,6 +17,9 @@ class result {
     // Init Main search
     let _search = new search(this);
     _search.init();
+
+    // Init tags search
+    this._tags.init();
   }
 
   parser() { console.log("parser", this.data);

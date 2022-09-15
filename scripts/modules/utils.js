@@ -1,4 +1,4 @@
-export class utils {
+class utils {
   constructor() {}
 
   /**
@@ -25,4 +25,32 @@ export class utils {
 
     elementStyle.display = value;
   }
+
+  /**
+   * Checks if length of a value is greater than 3.
+   * @param {string} value The value to check.
+   * @returns {(boolean|string)} "false" or the value if it is greater than 3.
+   */
+  checkInputValue(value) {
+    /** @type {string} The cleaned value. */
+    let terms = () => {
+      /** @type {string} Remove leading and trailing spaces. */
+      let valueTrim = value.trim();
+      /** @type {string} Remove leading and trailing spaces. */
+      let valueTrimTLC = valueTrim.toLowerCase();
+
+      return valueTrimTLC;
+    };
+
+    /** @type {number} The size of the value. */
+    let valueLength = terms().length;
+    /** @type {(boolean|string)} The value that will be returned. "false" by default or a string if the value meets the condition. */
+    let result = false;
+
+    if (valueLength >= 3) result = terms();
+
+    return result;
+  }
 }
+
+export { utils };
