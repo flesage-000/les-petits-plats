@@ -2,11 +2,15 @@ module.exports = {
   "env": {
     "browser": true,
     "es2021": true,
-    "node":true,
-    "module":true
+    "node": true,
+    "module": true
   },
+  "extends": [
+    'standard'
+  ],
   "parserOptions": {
-    "ecmaVersion": "latest"
+    "ecmaVersion": 'latest',
+    "sourceType": 'module'
   },
   "rules": {
     "no-console": "off",
@@ -15,4 +19,4 @@ module.exports = {
     "quotes": ["error", "double"],
     "no-undef":"off"
   }
-};
+}
