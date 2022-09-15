@@ -49,7 +49,7 @@ class tags {
   /**
    * Event during manual search in the tag input.
    */
-  searchInTagsEvent(input) { console.log("searchInTagsEvent:\r\n- input", input);
+  searchInTagsEvent(input) { // console.log("searchInTagsEvent:\r\n- input", input);
     let _utils = new utils();
     /** @type {string} The user action that causes the event. */
     let event = "keyup";
@@ -122,7 +122,7 @@ class tags {
   linkEvent(node, resultInstance) { // console.log("linkEvent\r\nnode: typeof", typeof node, node, "\r\nresultInstance:", resultInstance);
 
       /** @param {function} event The event that occurs when clicking on a tag to select. */
-      let func = (event) => { // console.log("linkEvent event:", event, resultInstance, resultInstance.data.cssSelector);
+      let func = (event) => { console.log("linkEvent event:", event, resultInstance, resultInstance.data.cssSelector);
 
       /** @type {object} Event node. */
       let node = event.target;
@@ -134,10 +134,27 @@ class tags {
       /** Adds the selected filter to the global data object. */
       this.data.tags[tagType].selected.push(tagName);
 
+      /** Adds the button to the list of selected tags. */
+      this.addButtonToList(tagName, tagType);
+
       resultInstance.parser();
     };
 
     node.addEventListener("click", func);
+  }
+
+  /**
+   * Adds the button to the list of selected tags.
+   * @param {string} tagName The name of the tag.
+   * @param {string} tagType The category of the tag.
+   */
+  addButtonToList(tagName, tagType) { // console.log("addButtonToList:\r\n- tagName:", typeof tagName, tagName, "\r\n- tagType:", typeof tagType, tagType);
+    /** @type {object} The node to add to the DOM. */
+    let $wrapper = this._tagTpl.button(tagName, tagType);
+    /** @type {object} The tag button container. */
+    let buttonTagsContainer = document.querySelector(".tags");
+
+    buttonTagsContainer.appendChild($wrapper);
   }
 
   /**
