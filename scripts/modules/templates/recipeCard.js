@@ -3,7 +3,7 @@ class tplRecipeCard {
     this.recipe = recipe;
   }
 
-  card() {
+  card(recipe) { console.log("card:\r\n- recipe:", typeof recipe, recipe);
     const $wrapper = document.createElement("div");
 
     const $content = `
@@ -11,7 +11,7 @@ class tplRecipeCard {
 
     <div class="card-body bg-card-body">
 
-      <h5 class="card-title row"><span class="col">${this.recipe.name}</span><time datetime="${this.recipe.time[0]}" class="text-truncate col-auto"><i class="bi bi-clock" aria-label="horloge"></i>${this.recipe.time[1]}</time></h5>
+      <h5 class="card-title row"><span class="col">${recipe.name}</span><time datetime="${recipe.time[0]}" class="text-truncate col-auto"><i class="bi bi-clock" aria-label="horloge"></i>${recipe.time[1]}</time></h5>
 
       <div class="recipe container">
         <div class="row row-cols-2">
@@ -19,7 +19,7 @@ class tplRecipeCard {
 
           <div class="preparation col">
             <p>
-              ${this.recipe._description}
+              ${recipe._description}
             </p>
           </div>
         </div>
@@ -31,7 +31,7 @@ class tplRecipeCard {
     $wrapper.innerHTML = $content;
 
     const $wrapperIngredient = $wrapper.querySelector(".ingredients");
-    const $contentIngredient = this.ingredients(this.recipe.ingredients);
+    const $contentIngredient = this.ingredients(recipe.ingredients);
     $wrapperIngredient.appendChild($contentIngredient);
 
     // Add Boostrap class
@@ -47,7 +47,6 @@ class tplRecipeCard {
     ingredients.forEach(ingredient => {
       const $li = document.createElement("li");
       const $span = document.createElement("span");
-      let string;
 
       switch(true) {
         // All datas are available

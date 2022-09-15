@@ -1,4 +1,4 @@
-// import { tplRecipeCard } from "./templates/recipeCard.js";
+import { tplRecipeCard } from "./templates/recipeCard.js";
 import { search } from "./search.js";
 import { tags } from "./tags.js";
 
@@ -9,6 +9,7 @@ class result {
   constructor(data) {
     this.data = data;
     this._tags = new tags(this.data);
+    this._tplRecipeCard = new tplRecipeCard();
   }
 
   init() {
@@ -63,6 +64,11 @@ class result {
         this.getTags(ingredientList, tagsSelectableIngredientsNew, this.data.tags.ingredients.selected);
         /** Retrieves the ustensils from the current recipe and adds it to an array if it isn't already there. */
         this.getTags(currentRecipe.ustensils, tagsSelectableUstensilsNew, this.data.tags.ustensils.selected);
+
+        let $wrapper = this._tplRecipeCard.card(currentRecipe);
+        let resultsContainer = document.querySelector(".results");
+        resultsContainer.appendChild($wrapper);
+
       } else { console.log("!!! ISN'T DISPLAYED !!!");}
 
       /** Main foreach callback. */
