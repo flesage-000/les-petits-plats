@@ -130,7 +130,9 @@ class result {
     /**
      * CASE #1 No filter is selected.
      */
-    if (hasTagSelected == 0 && !mainSearch) { console.log(`CASE #1`); return true; }
+    if (hasTagSelected == 0 && !mainSearch) { console.log(`CASE #1`);
+      isDisplayable = true;
+    }
 
     /**
      * CASE #2 One or more filter(s) have been selected.
