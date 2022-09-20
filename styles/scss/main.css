@@ -17711,6 +17711,8 @@ h3 {
 }
 .results .card-img-top {
   height: 178px;
+  padding: 10px;
+  opacity: 0.25;
 }
 .results h5 {
   font-family: "Lato", sans-serif;

@@ -7,7 +7,9 @@ export default class tplRecipeCard {
     const $wrapper = document.createElement("div");
 
     const $content = `
-    <img src="" class="card-img-top bg-card-header" alt="...">
+    <div class="bg-card-header">
+      <img src="./assets/images/restaurant.png" class="card-img-top" alt="...">
+    </div>
 
     <div class="card-body bg-card-body">
 
