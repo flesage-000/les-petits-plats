@@ -1,4 +1,4 @@
-class tagTpl {
+export default class tagTpl {
   constructor() {}
 
   list(name, type) { // console.log("name", name);
@@ -36,5 +36,3 @@ class tagTpl {
     return $fragment;
   }
 }
-
-export { tagTpl };

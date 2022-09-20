@@ -1,4 +1,4 @@
-class tplRecipeCard {
+export default class tplRecipeCard {
   constructor(recipe) {
     this.recipe = recipe;
   }
@@ -80,5 +80,3 @@ class tplRecipeCard {
     return $ul;
   }
 }
-
-export { tplRecipeCard };

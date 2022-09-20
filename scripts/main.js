@@ -1,8 +1,7 @@
-import { data, filter, TESTDATA } from "./data.js";
+import { data } from "./data.js";
 import { recipes } from "./modules/models/recipes.js";
 
-// import { tags } from "./modules/tags.js"
-import { result } from "./modules/result.js"
+import result from "./modules/result.js"
 
 class main {
   constructor(data) {

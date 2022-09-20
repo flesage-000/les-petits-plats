@@ -1,8 +1,8 @@
-import { tplRecipeCard } from "./templates/recipeCard.js";
-import { search } from "./search.js";
-import { tags } from "./tags.js";
+import tplRecipeCard from "./templates/recipeCard.js";
+import search from "./search.js";
+import tags from "./tags.js";
 
-class result {
+export default class result {
   /**
    * @param {object} data All necessary data (recipes + options) on the results page.
    */
@@ -255,5 +255,3 @@ class result {
     container.style.setProperty("--grid-rows", gridRows);
   }
 }
-
-export { result };

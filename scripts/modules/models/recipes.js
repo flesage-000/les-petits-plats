@@ -1,4 +1,4 @@
-class recipes {
+export default class recipes {
   /**
    *
    * @param {object} data Recipes JSON

@@ -1,4 +1,4 @@
-class utils {
+export default class utils {
   constructor() {}
 
   /**
@@ -52,5 +52,3 @@ class utils {
     return result;
   }
 }
-
-export { utils };

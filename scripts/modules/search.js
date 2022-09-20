@@ -1,6 +1,6 @@
-import { utils } from "./utils.js";
+import utils from "./utils.js";
 
-class search {
+export default class search {
   constructor(result) {
     this.tagsNode = document.querySelector(".tags");
     this._result = result;
@@ -44,5 +44,3 @@ class search {
     inputSearch.addEventListener(event, eventFunction);
   }
 }
-
-export { search };
