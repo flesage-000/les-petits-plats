@@ -75,16 +75,22 @@ export default class result {
       if (recipesLength - 1 == key) { // console.log("!!! TRAITEMENT TERMINEE !!!\r\n- Nouveaux Appliance: ", tagsSelectableAppliancesNew, "\r\n- Nouveaux Ingredients: ", tagsSelectableIngredientsNew, "\r\n- Nouveaux Ustensils: ", tagsSelectableUstensilsNew);
         /** Builds the buttons of the tags to select. */
         tagsSelectableAppliancesNew.forEach(appliance => {
-          let $wrapper = this._tags.createLink(appliance, "appliances");
-          this._tags.linkEvent($wrapper, this);
+          if (!this.data.tags.appliances.selected.includes(appliance)) {
+            let $wrapper = this._tags.createLink(appliance, "appliances");
+            this._tags.linkEvent($wrapper, this);
+          }
         });
         tagsSelectableIngredientsNew.forEach(ingredient => {
-          let $wrapper = this._tags.createLink(ingredient, "ingredients");
-          this._tags.linkEvent($wrapper, this);
+          if (!this.data.tags.ingredients.selected.includes(ingredient)) {
+            let $wrapper = this._tags.createLink(ingredient, "ingredients");
+            this._tags.linkEvent($wrapper, this);
+          }
         });
         tagsSelectableUstensilsNew.forEach(ustensil => {
-          let $wrapper = this._tags.createLink(ustensil, "ustensils");
-          this._tags.linkEvent($wrapper, this);
+          if (!this.data.tags.ustensils.selected.includes(ustensil)) {
+            let $wrapper = this._tags.createLink(ustensil, "ustensils");
+            this._tags.linkEvent($wrapper, this);
+          }
         });
       }
     });
