@@ -46,27 +46,30 @@ export default class tplRecipeCard {
   ingredients(ingredients) {
     const $ul = document.createElement("ul");
 
-    ingredients.forEach(ingredient => {
+    /** @type {number} The number of occurrences in the ingredients data table. */
+    let ingredientsLength = ingredients.length;
+
+    for (let i=0;i<ingredientsLength; i++) {
       const $li = document.createElement("li");
       const $span = document.createElement("span");
 
       switch(true) {
         // All datas are available
-        case ingredient.quantity !== undefined && ingredient.unit !== undefined:
-          $li.innerText = ingredient.quantity + ingredient.unit;
-          $span.innerText = ingredient.ingredient + ": ";
+        case ingredients[i].quantity !== undefined && ingredients[i].unit !== undefined:
+          $li.innerText = ingredients[i].quantity + ingredients[i].unit;
+          $span.innerText = ingredients[i].ingredient + ": ";
           break;
         // Unit data not available
-        case ingredient.quantity !== undefined && ingredient.unit === undefined:
-          $li.innerText = ingredient.quantity;
-          $span.innerText = ingredient.ingredient + ": ";
+        case ingredients[i].quantity !== undefined && ingredients[i].unit === undefined:
+          $li.innerText = ingredients[i].quantity;
+          $span.innerText = ingredients[i].ingredient + ": ";
           break;
         // Quantity and unit not availables
-        case ingredient.quantity === undefined && ingredient.unit === undefined:
-          $span.innerText = ingredient.ingredient;
+        case ingredients[i].quantity === undefined && ingredients[i].unit === undefined:
+          $span.innerText = ingredients[i].ingredient;
           break;
         default:
-          console.error("ingredient not managed => ", ingredient);
+          console.error("ingredient not managed => ", ingredients[i]);
       }
 
       // Add bootstrap class
@@ -74,7 +77,7 @@ export default class tplRecipeCard {
 
       $li.prepend($span);
       $ul.appendChild($li);
-    });
+    }
 
     // Add bootstrap class
     $ul.classList.add("list-unstyled");

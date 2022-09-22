@@ -29,8 +29,11 @@ class main {
       recipes: []
     };
 
-    dataRaw.forEach(data => {
-      let cleaner = new recipes(data);
+    /** @type {number} The number of occurrences in the raw data table. */
+    let dataRawLength = dataRaw.length;
+
+    for (let i=0; i<dataRawLength; i++) {
+      let cleaner = new recipes(data[i]);
       let newObject = {};
 
       newObject.appliance = cleaner.appliance;
@@ -43,7 +46,7 @@ class main {
       newObject.ustensils = cleaner.ustensils;
 
       newDataArray.recipes.push(newObject);
-    });
+    }
 
     // console.log("normalizeData: return", typeof newDataArray, "\r", newDataArray);
     return newDataArray;

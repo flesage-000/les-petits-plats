@@ -74,15 +74,17 @@ export default class tags {
     }
     /** @type {array} Container tags. */
     let tags = tagsContainer().querySelectorAll(".dropdown-item");
+    /** @type {number} The length of tags array. */
+    let tagsLength = tags.length;
 
     /** Loop to display or not the tags. */
-    tags.forEach(tag => {
-      if (tag.dataset.tagName.toLowerCase().includes(valueToSearch) || reset) {
-        tag.parentNode.style.display = "";
+    for (let i=0;i<tagsLength; i++) {
+      if (tags[i].dataset.tagName.toLowerCase().includes(valueToSearch) || reset) {
+        tags[i].parentNode.style.display = "";
       } else {
-        tag.parentNode.style.display = "none";
+        tags[i].parentNode.style.display = "none";
       }
-    });
+    }
   }
 
   /**
@@ -103,8 +105,8 @@ export default class tags {
    */
   linkEvent(node, resultInstance) { // console.log("linkEvent\r\nnode: typeof", typeof node, node, "\r\nresultInstance:", resultInstance);
 
-      /** @param {function} event The event that occurs when clicking on a tag to select. */
-      let func = (event) => { // console.log("linkEvent event:", event, resultInstance, resultInstance.data.cssSelector);
+    /** @param {function} event The event that occurs when clicking on a tag to select. */
+    let func = (event) => { // console.log("linkEvent event:", event, resultInstance, resultInstance.data.cssSelector);
 
       /** @type {object} Event node. */
       let node = event.target;
@@ -161,11 +163,14 @@ export default class tags {
       let tagType = node.dataset.tagType;
       /** @type {array} The array of selected tags. */
       let currentArray = this.data.tags[tagType].selected;
+      /** @type {number} The length of selected tags array. */
+      let currentArrayLength = currentArray.length;
+      /** @type {array} The array of filtered tags. */
+      let filtered = [];
 
-      /** @type {array} The array of selected tags without the deleted tag. */
-      let filtered = currentArray.filter(tag => {
-        return tag != tagName;
-      });
+      for (let i=0; i<currentArrayLength; i++) {
+        if (currentArray[i] != tagName) filtered.push(currentArray[i]);
+      }
       this.data.tags[tagType].selected = filtered;
 
       node.remove();

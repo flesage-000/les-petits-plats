@@ -32,11 +32,17 @@ export default class recipes {
   get ingredients() {
     let newIngredients = [];
 
-    this._ingredients.forEach(current => {
+    /** @type {array} The array of current ingredients. */
+    let currentIngredients = this._ingredients;
+
+    /** @type {number} The length of current ingredients array. */
+    let currentIngredientsLength = currentIngredients.length;
+
+    for (let i=0; i<currentIngredientsLength; i++) {
       let currentIngredient = new Object();
 
       // Normalize ingredient name
-      let currentName = current.ingredient.trim();
+      let currentName = currentIngredients[i].ingredient.trim();
       currentName = currentName.toLowerCase();
       currentName = currentName.charAt(0).toUpperCase() + currentName.slice(1);
 
@@ -242,13 +248,13 @@ export default class recipes {
       }
 
       let currentQuantity = null;
-      if (current.quantity) {
-        currentQuantity = current.quantity;
+      if (currentIngredients[i].quantity) {
+        currentQuantity = currentIngredients[i].quantity;
       }
 
       let currentUnit = null;
-      if (current.unit) {
-        currentUnit = current.unit.toLowerCase();
+      if (currentIngredients[i].unit) {
+        currentUnit = currentIngredients[i].unit.toLowerCase();
         currentUnit = currentUnit.trim();
         currentUnit = currentUnit.replace(".", "");
 
@@ -326,8 +332,8 @@ export default class recipes {
 
       // Push ingredients object into ingredients array
       newIngredients.push(currentIngredient);
+    }
 
-    });
     return newIngredients;
   }
 
@@ -405,17 +411,23 @@ export default class recipes {
   get ustensils() {
     let newUstensils = [];
 
-    this._ustensils.forEach(ustensil => {
-      ustensil = ustensil.trim();
-      ustensil = ustensil.toLowerCase();
-      ustensil = ustensil.charAt(0).toUpperCase() + ustensil.slice(1);
+    /** @type {array} The array of ustensils. */
+    let currentUstensils = this._ustensils;
 
-      switch (ustensil) {
+    /** @type {number} The number of occurrences in the ustensils data table. */
+    let currentUstensilsLength = currentUstensils.length;
+
+    for (let i=0; i<currentUstensilsLength; i++) {
+      currentUstensils[i] = currentUstensils[i].trim();
+      currentUstensils[i] = currentUstensils[i].toLowerCase();
+      currentUstensils[i] = currentUstensils[i].charAt(0).toUpperCase() + currentUstensils[i].slice(1);
+
+      switch (currentUstensils[i]) {
         case "Bol":
-          // ustensil: "";
+          // currentUstensils[i]: "";
           break;
         case "Casserolle":
-          ustensil = "Casserole";
+          currentUstensils[i] = "Casserole";
           break;
         case "Cocotte minute":
         case "Couteau":
@@ -427,36 +439,36 @@ export default class recipes {
         case "Fourchette":
         case "Louche":
         case "Moule":
-          // ustensil = "";
+          // currentUstensils[i] = "";
           break;
         case "Moule à gateaux":
-          ustensil = "Moule à gâteaux";
+          currentUstensils[i] = "Moule à gâteaux";
           break;
         case "Moule à tarte":
         case "Moule à tartelettes (6)":
         case "Passoire":
         case "Plaque de cuisson":
         case "Plat à gratin":
-          // ustensil = "";
+          // currentUstensils[i] = "";
           break;
         case "Poelle à frire":
-          ustensil = "Poêle à frire";
+          currentUstensils[i] = "Poêle à frire";
           break;
         case "Presse citron":
         case "Râpe à fromage":
         case "Rouleau à patisserie":
         case "Saladier":
         case "Spatule":
-          // ustensil = "";
+          // currentUstensils[i] = "";
           break;
         case "Verres":
-          ustensil = "Verre";
+          currentUstensils[i] = "Verre";
           break;
-        default: console.warn("ERROR ustensil '" + ustensil + "' not managed!");
+        default: console.warn("ERROR ustensil '" + currentUstensils[i] + "' not managed!");
       }
 
-      newUstensils.push(ustensil);
-    });
+      newUstensils.push(currentUstensils[i]);
+    }
 
     return newUstensils;
   }
