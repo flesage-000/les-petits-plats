@@ -3,7 +3,7 @@ export default class tplRecipeCard {
     this.recipe = recipe;
   }
 
-  card(recipe) { console.log("card:\r\n- recipe:", typeof recipe, recipe);
+  card(recipe) { // console.log("card:\r\n- recipe:", typeof recipe, recipe);
     const $wrapper = document.createElement("div");
 
     const $content = `

@@ -13,7 +13,7 @@ class main {
     let dataCleaned = this.normalizeData(this.data);
 
     // Add data useful for managing the cooking recipes page.
-    let dataWithOptions = this.buildDataArray(dataCleaned); console.log("dataWithOptions", dataWithOptions);
+    let dataWithOptions = this.buildDataArray(dataCleaned); // console.log("dataWithOptions", dataWithOptions);
 
     const _result = new result(dataWithOptions);
     _result.init();

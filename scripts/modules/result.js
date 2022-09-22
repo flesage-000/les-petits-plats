@@ -23,7 +23,7 @@ export default class result {
     this._tags.init();
   }
 
-  parser() { console.log("parser", this.data);
+  parser() { // console.log("parser", this.data);
     // Clear dynamics nodes
     this.nodesCleaner();
 
@@ -44,12 +44,12 @@ export default class result {
     /** Parse all recipes */
     recipes.forEach((currentRecipe, key) => { // console.log("recipe, key", recipe, key);
 
-      if (key == 0) {console.log("!!! TRAITEMENT COMMENCEE !!!\r\nNouveaux Appliance: ", tagsSelectableAppliancesNew, "\r\nNouveaux Ingredients: ", tagsSelectableIngredientsNew, "\r\nNouveaux Ustensils: ", tagsSelectableUstensilsNew);}
+      // if (key == 0) { console.log("!!! TRAITEMENT COMMENCEE !!!\r\nNouveaux Appliance: ", tagsSelectableAppliancesNew, "\r\nNouveaux Ingredients: ", tagsSelectableIngredientsNew, "\r\nNouveaux Ustensils: ", tagsSelectableUstensilsNew);}
 
       /** @type {boolean} Determines whether the current recipe is displayable according to its appliances. */
       let currentRecipeIsDisplayable = this.recipeIsDisplayable(currentRecipe);
 
-      if (currentRecipeIsDisplayable) { console.log("!!! IS DISPLAY !!!\r\n - currentRecipeIsDisplayable", currentRecipeIsDisplayable, "\r\n - this.data.tags", this.data.tags);
+      if (currentRecipeIsDisplayable) { // console.log("!!! IS DISPLAY !!!\r\n - currentRecipeIsDisplayable", currentRecipeIsDisplayable, "\r\n - this.data.tags", this.data.tags);
         /** Retrieves the devices from the current recipe and adds it to an array if it isn't already there. */
         this.getTags(currentRecipe.appliance, tagsSelectableAppliancesNew, this.data.tags.appliances.selected);
 
@@ -69,10 +69,10 @@ export default class result {
         let resultsContainer = document.querySelector(".results");
         resultsContainer.appendChild($wrapper);
 
-      } else { console.log("!!! ISN'T DISPLAYED !!!");}
+      } // else { console.log("!!! ISN'T DISPLAYED !!!");}
 
       /** Main foreach callback. */
-      if (recipesLength - 1 == key) { console.log("!!! TRAITEMENT TERMINEE !!!\r\n- Nouveaux Appliance: ", tagsSelectableAppliancesNew, "\r\n- Nouveaux Ingredients: ", tagsSelectableIngredientsNew, "\r\n- Nouveaux Ustensils: ", tagsSelectableUstensilsNew);
+      if (recipesLength - 1 == key) { // console.log("!!! TRAITEMENT TERMINEE !!!\r\n- Nouveaux Appliance: ", tagsSelectableAppliancesNew, "\r\n- Nouveaux Ingredients: ", tagsSelectableIngredientsNew, "\r\n- Nouveaux Ustensils: ", tagsSelectableUstensilsNew);
         /** Builds the buttons of the tags to select. */
         tagsSelectableAppliancesNew.forEach(appliance => {
           let $wrapper = this._tags.createLink(appliance, "appliances");
@@ -112,7 +112,7 @@ export default class result {
    * @param {object} currentRecipe The object of current recipe.
    * @returns {boolean}
    */
-  recipeIsDisplayable(currentRecipe) { console.log("recipeIsDisplayable\r\n- currentRecipe:", typeof currentRecipe, currentRecipe, "\r\n - this", this);
+  recipeIsDisplayable(currentRecipe) { // console.log("recipeIsDisplayable\r\n- currentRecipe:", typeof currentRecipe, currentRecipe, "\r\n - this", this);
 
     /** @type {boolean} Globally determines whether the current recipe is displayable or not. Default value "false". */
     let isDisplayable = false;

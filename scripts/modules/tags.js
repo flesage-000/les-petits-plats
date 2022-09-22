@@ -104,7 +104,7 @@ export default class tags {
   linkEvent(node, resultInstance) { // console.log("linkEvent\r\nnode: typeof", typeof node, node, "\r\nresultInstance:", resultInstance);
 
       /** @param {function} event The event that occurs when clicking on a tag to select. */
-      let func = (event) => { console.log("linkEvent event:", event, resultInstance, resultInstance.data.cssSelector);
+      let func = (event) => { // console.log("linkEvent event:", event, resultInstance, resultInstance.data.cssSelector);
 
       /** @type {object} Event node. */
       let node = event.target;
@@ -148,7 +148,7 @@ export default class tags {
    * @param {*} node
    * @param {*} resultInstance
    */
-  addButtonToListEvent(node, resultInstance) { console.log("addButtonToListEvent:\r\n- node:", typeof node, node);
+  addButtonToListEvent(node, resultInstance) { // console.log("addButtonToListEvent:\r\n- node:", typeof node, node);
     /** @type {string} The user action that causes the event. */
     let event = "click";
     /** @type {function} The function caused by the event. */
