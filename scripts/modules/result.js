@@ -130,34 +130,40 @@ export default class result {
     /**
      * CASE #1 No filter is selected.
      */
-    if (hasTagSelected == 0 && !mainSearch) { console.log(`CASE #1`);
+    if (hasTagSelected == 0 && !mainSearch) { // console.log(`CASE #1`);
       isDisplayable = true;
     }
 
     /**
      * CASE #2 One or more filter(s) have been selected.
      */
-    if (hasTagSelected >= 1 && !mainSearch) { console.log(`CASE #2`, currentRecipe);
+    if (hasTagSelected >= 1 && !mainSearch) { // console.log(`CASE #2`, currentRecipe);
       isDisplayable = this.caseTagsOnly(currentRecipe);
     }
 
     /**
      * CASE #3 The user performed a manual search in the main search field.
      */
-    if (mainSearch && hasTagSelected == 0) { console.log("CASE #3", currentRecipe);
+    if (mainSearch && hasTagSelected == 0) { // console.log("CASE #3", currentRecipe);
       isDisplayable = this.caseMainSearchOnly(currentRecipe, mainSearch);
     }
 
     /**
      * CASE #4 The user performed a manual search in the main search field AND also selected at least one tag.
      */
-    if (mainSearch && hasTagSelected >= 1) { console.log("CASE #4", currentRecipe);
+    if (mainSearch && hasTagSelected >= 1) { // console.log("CASE #4", currentRecipe);
       isDisplayable = this.caseMainSearchPlusTags(currentRecipe, mainSearch);
     }
 
     return isDisplayable;
   }
 
+  /**
+   * Determines if the recipe contains the search term(s) AND if the recipe contains the tag(s).
+   * @param {object} currentRecipe
+   * @param string} mainSearch
+   * @returns boolean
+   */
   caseMainSearchPlusTags(currentRecipe, mainSearch) { // console.log("caseMainSearchPlusTags: ", currentRecipe, mainSearch);
     let hasTags = this.caseTagsOnly(currentRecipe);
     let hasTerms = this.caseMainSearchOnly(currentRecipe, mainSearch);

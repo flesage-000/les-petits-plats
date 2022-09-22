@@ -40,7 +40,6 @@ export default class tags {
     let func = (ev) => {
       /** @type {(boolean|string)} The value of the input. If the script cannot continue its value will be "false" otherwise it contains the user's search terms. */
       let searchIsValid = _utils.checkInputValue(ev.target.value);
-
       /** Determines if the conditions are sufficient to continue the script. */
       if (searchIsValid === false) {
         /** The filtering conditions are not met, so we redisplay all the tags. */
@@ -105,7 +104,7 @@ export default class tags {
   linkEvent(node, resultInstance) { // console.log("linkEvent\r\nnode: typeof", typeof node, node, "\r\nresultInstance:", resultInstance);
 
       /** @param {function} event The event that occurs when clicking on a tag to select. */
-      let func = (event) => { // console.log("linkEvent event:", event, resultInstance, resultInstance.data.cssSelector);
+      let func = (event) => { console.log("linkEvent event:", event, resultInstance, resultInstance.data.cssSelector);
 
       /** @type {object} Event node. */
       let node = event.target;
@@ -131,7 +130,7 @@ export default class tags {
    * @param {string} tagName The name of the tag.
    * @param {string} tagType The category of the tag.
    */
-  addButtonToList(tagName, tagType, resultInstance) { // console.log("addButtonToList:\r\n- tagName:", typeof tagName, tagName, "\r\n- tagType:", typeof tagType, tagType);
+  addButtonToList(tagName, tagType, resultInstance) { // onsole.log("addButtonToList:\r\n- tagName:", typeof tagName, tagName, "\r\n- tagType:", typeof tagType, tagType);
     /** @type {object} The node to add to the DOM. */
     let $wrapper = this._tagTpl.button(tagName, tagType);
     /** @type {object} The tag button container. */
@@ -144,30 +143,36 @@ export default class tags {
     this.addButtonToListEvent(buttonTagsContainer.lastChild, resultInstance);
   }
 
-  addButtonToListEvent(node, resultInstance) { // console.log("addButtonToListEvent:\r\n- node:", typeof node, node);
+  /**
+   *
+   * @param {*} node
+   * @param {*} resultInstance
+   */
+  addButtonToListEvent(node, resultInstance) { console.log("addButtonToListEvent:\r\n- node:", typeof node, node);
+    /** @type {string} The user action that causes the event. */
+    let event = "click";
+    /** @type {function} The function caused by the event. */
     let func = (ev) => {
-
       /** @type {object} Event node. */
       let node = ev.target;
       /** @type {object} Get the tag name in the "data" attribute. */
       let tagName = node.dataset.tagName;
       /** @type {object} Get the tag type in the "data" attribute. */
       let tagType = node.dataset.tagType;
-
       /** @type {array} The array of selected tags. */
       let currentArray = this.data.tags[tagType].selected;
+
       /** @type {array} The array of selected tags without the deleted tag. */
       let filtered = currentArray.filter(tag => {
         return tag != tagName;
       });
-
-      currentArray = filtered;
+      this.data.tags[tagType].selected = filtered;
 
       node.remove();
 
       resultInstance.parser();
     }
-    node.addEventListener("click", func);
+    node.addEventListener(event, func);
   }
 
   /**
