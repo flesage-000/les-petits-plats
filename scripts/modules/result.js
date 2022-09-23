@@ -183,58 +183,42 @@ export default class result {
    * @returns boolean
    */
   caseTagsOnly(currentRecipe) { // console.log("caseTagsOnly", currentRecipe);
+    /** @type {number} The number of selected tags. */
+    let countThemeTagSelected = 0;
+    /** @type {array} Array containing the boolean for each type of tag and which will authorize or not the display of the recipe. */
+    let resultBool = [];
+
     /** @type {array} The array of appliance in the current recipe. */
     let currentAppliances = currentRecipe.appliance;
     /** @type {array} The array of selected appliances. */
     let selectedAppliances = this._tags.data.tags.appliances.selected;
-    /** @type {boolean} The boolean determining if the current recipe contains the selected appliances or not. Default value "false". */
-    let hasAppliancesFilter = false;
-
     // Tests if the array contains at least one value and, if so, checks if the "appliances" tags of the current recipe are present.
-    if (selectedAppliances.length >= 1) hasAppliancesFilter = selectedAppliances.every(filter => { return currentAppliances.includes(filter); });
+    if (selectedAppliances.length >= 1) {
+     resultBool.push(selectedAppliances.every(filter => { return currentAppliances.includes(filter); }))
+      countThemeTagSelected ++;
+    }
 
     /** @type {array} The array of ingredients in the current recipe. */
     let currentIngredients = currentRecipe.ingredients;
     /** @type {array} The array of selected ingredients. */
     let selectedIngredients = this._tags.data.tags.ingredients.selected;
-    /** @type {boolean} The boolean determining if the current recipe contains the selected ingredients or not. Default value "false". */
-    let hasIngredientsFilter = false;
-
     // Tests if the array contains at least one value and, if so, checks if the "ingredients" tags of the current recipe are present.
-    if (selectedIngredients.length >= 1) hasIngredientsFilter = selectedIngredients.every(filter => { return currentIngredients.find(current => { if (current.ingredient == filter) return true; }); });
+    if (selectedIngredients.length >= 1) {
+      resultBool.push(selectedIngredients.every(filter => { return currentIngredients.find(current => { if (current.ingredient == filter) return true; }); }))
+      countThemeTagSelected ++;
+    }
 
     /** @type {array} The array of ustensils in the current recipe. */
     let currentUstensils = currentRecipe.ustensils;
     /** @type {array} The array of selected ustensils. */
     let selectedUstensils = this._tags.data.tags.ustensils.selected
-    /** @type {boolean} The boolean determining if the current recipe contains the selected ustensils or not. Default value "false". */
-    let hasUstensilsFilter = false;
-
     // Tests if the array contains at least one value and, if so, checks if the "ustensils" tags of the current recipe are present.
-    if (selectedUstensils.length >= 1) hasUstensilsFilter = selectedUstensils.every(filter => { return currentUstensils.includes(filter); });
+    if (selectedUstensils.length >= 1) {
+      resultBool.push(selectedUstensils.every(filter => { return currentUstensils.includes(filter); }));
+      countThemeTagSelected++;
+    }
 
-     // J'ai ma liste d'ingrédients + appareils + ustensibles de ma current recette
-
-     //selectedUstensils.filter((ust)=>{ return (ust == motClef)}).length >0
-     let motsClefsRecette = [];
-
-     currentUstensils.every(ust => motsClefsRecette.push(ust));
-     currentIngredients.every(ing => motsClefsRecette.push(ing.ingredient));
-     currentAppliances.every(app => motsClefsRecette.push(app));
-
-    let result = false;
-   console.log(motsClefsRecette)
-
-     motsClefsRecette.forEach( motClef =>{
-      console.log(motClef);
-
-       if( (selectedAppliances.length > 0?selectedAppliances.includes(motClef):true) & (selectedIngredients.length > 0 ? selectedIngredients.includes(motClef):true) & (selectedUstensils.length > 0? selectedUstensils.includes(motClef):true)){
-        result = true;
-       }
-
-     })
-     return result ;
-    //return hasAppliancesFilter || hasIngredientsFilter || hasUstensilsFilter ? true : false;
+    return resultBool.filter(filt => filt==true).length == countThemeTagSelected;
   }
 
   /**
