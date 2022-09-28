@@ -90,6 +90,6 @@ class main {
   }
 }
 
-console.log("!!! FUNCTIONNAL CODE VERSION !!!\r\n - JSBen.ch => https://jsben.ch/PS2ym");
+console.log("!!! FUNCTIONNAL CODE VERSION !!!\r\n - JSBen.ch => https://jsben.ch/CoFqZ ");
 const _main = new main(data);
 _main.init();
