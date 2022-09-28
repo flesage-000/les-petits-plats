@@ -17705,7 +17705,6 @@ h3 {
 .results {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(var(--grid-rows, 0), 1fr);
   grid-column-gap: 50px;
   grid-row-gap: 50px;
 }
