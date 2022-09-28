@@ -87,7 +87,7 @@ export default class tplRecipeCard {
    * @returns HTMLObject
    */
   noResult() {
-    let $wrapper = document.createElement("div");
+    let $wrapper = document.createElement("p");
 
     let $content = `
     Aucune recette ne correspond à votre critère... vous pouvez chercher &laquo; tarte aux pommes &raquo;, &laquo; poisson &raquo;, etc.
