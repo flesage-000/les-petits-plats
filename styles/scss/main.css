@@ -17712,6 +17712,8 @@ h3 {
   height: 178px;
   padding: 10px;
   opacity: 0.25;
+  -o-object-fit: contain;
+     object-fit: contain;
 }
 .results h5 {
   font-family: "Lato", sans-serif;
