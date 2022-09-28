@@ -28,9 +28,9 @@ export default class result {
     this.nodesCleaner();
 
     /** @type {object} The object containing all unfiltered recipes. */
-    let recipes = this.data.recipes;
+    const recipes = this.data.recipes;
     /** @type {number} The number of recipes available. */
-    let recipesLength = recipes.length;
+    const recipesLength = recipes.length;
 
     /** @type {array} The array that contains the new appliances can be filtered according to the results. */
     let tagsSelectableAppliancesNew = [];
@@ -42,71 +42,58 @@ export default class result {
     let tagsSelectableUstensilsNew = [];
 
     /** Parse all recipes */
-    for (let i=0; i<recipesLength; i++) { // console.log("recipes[i], i", recipes[i], i);
+    recipes.forEach((currentRecipe, key) => { // console.log("recipe, key", recipe, key);
 
-      // if (i == 0) { console.log("!!! TRAITEMENT COMMENCEE !!!\r\nNouveaux Appliance: ", tagsSelectableAppliancesNew, "\r\nNouveaux Ingredients: ", tagsSelectableIngredientsNew, "\r\nNouveaux Ustensils: ", tagsSelectableUstensilsNew);}
+      // if (key == 0) { console.log("!!! TRAITEMENT COMMENCEE !!!\r\nNouveaux Appliance: ", tagsSelectableAppliancesNew, "\r\nNouveaux Ingredients: ", tagsSelectableIngredientsNew, "\r\nNouveaux Ustensils: ", tagsSelectableUstensilsNew);}
 
       /** @type {boolean} Determines whether the current recipe is displayable according to its appliances. */
-      let currentRecipeIsDisplayable = this.recipeIsDisplayable(recipes[i]);
+      let currentRecipeIsDisplayable = this.recipeIsDisplayable(currentRecipe);
 
       if (currentRecipeIsDisplayable) { // console.log("!!! IS DISPLAY !!!\r\n - currentRecipeIsDisplayable", currentRecipeIsDisplayable, "\r\n - this.data.tags", this.data.tags);
         /** Retrieves the devices from the current recipe and adds it to an array if it isn't already there. */
-        this.getTags(recipes[i].appliance, tagsSelectableAppliancesNew, this.data.tags.appliances.selected);
-        /** @type {array} The array of ingredients list. */
-        let ingredientList = [];
-        /** @type {array} The array of current ingredients list. */
-        let currentIngredients = recipes[i].ingredients;
-        /** @type {number} The length array of current ingredients list. */
-        let currentIngredientsLength = currentIngredients.length;
+        this.getTags(currentRecipe.appliance, tagsSelectableAppliancesNew, this.data.tags.appliances.selected);
 
-        for (let j=0; j<currentIngredientsLength; j++) {
+        let ingredientList = [];
+        // Because the ingredients are in separate objects, you have to extract them and put them in an array.
+        currentRecipe.ingredients.forEach(Ingredientdata => { // console.log("ingredientData", Ingredientdata.ingredient);
           /**
            * Retrieves the ingredients from the current recipe and adds it to an array if it isn't already there.
            */
-          ingredientList.push(currentIngredients[j].ingredient);
-        }
+          ingredientList.push(Ingredientdata.ingredient);
+        });
         this.getTags(ingredientList, tagsSelectableIngredientsNew, this.data.tags.ingredients.selected);
         /** Retrieves the ustensils from the current recipe and adds it to an array if it isn't already there. */
-        this.getTags(recipes[i].ustensils, tagsSelectableUstensilsNew, this.data.tags.ustensils.selected);
+        this.getTags(currentRecipe.ustensils, tagsSelectableUstensilsNew, this.data.tags.ustensils.selected);
 
-        let $wrapper = this._tplRecipeCard.card(recipes[i]);
+        let $wrapper = this._tplRecipeCard.card(currentRecipe);
         let resultsContainer = document.querySelector(".results");
         resultsContainer.appendChild($wrapper);
 
       } // else { console.log("!!! ISN'T DISPLAYED !!!");}
 
-      /** Main loop callback. */
-      if (recipesLength - 1 == i) { // console.log("!!! TRAITEMENT TERMINEE !!!\r\n- Nouveaux Appliance: ", tagsSelectableAppliancesNew, "\r\n- Nouveaux Ingredients: ", tagsSelectableIngredientsNew, "\r\n- Nouveaux Ustensils: ", tagsSelectableUstensilsNew);
-
-        /** @type {number} The number of occurrences in the appliances data table. */
-        let tagsSelectableAppliancesNewLength = tagsSelectableAppliancesNew.length;
+      /** Main foreach callback. */
+      if (recipesLength - 1 == key) { // console.log("!!! TRAITEMENT TERMINEE !!!\r\n- Nouveaux Appliance: ", tagsSelectableAppliancesNew, "\r\n- Nouveaux Ingredients: ", tagsSelectableIngredientsNew, "\r\n- Nouveaux Ustensils: ", tagsSelectableUstensilsNew);
         /** Builds the buttons of the tags to select. */
-        for (let j=0; j<tagsSelectableAppliancesNewLength; j++) {
-          if (!this.data.tags.appliances.selected.includes(tagsSelectableAppliancesNew[j])) {
-            let $wrapper = this._tags.createLink(tagsSelectableAppliancesNew[j], "appliances");
+        tagsSelectableAppliancesNew.forEach(appliance => {
+          if (!this.data.tags.appliances.selected.includes(appliance)) {
+            let $wrapper = this._tags.createLink(appliance, "appliances");
             this._tags.linkEvent($wrapper, this);
           }
-        }
-
-        /** @type {number} The number of occurrences in the ingredients data table. */
-        let tagsSelectableIngredientsNewLength = tagsSelectableIngredientsNew.length;
-        for (let j=0; j<tagsSelectableIngredientsNewLength; j++) {
-          if (!this.data.tags.ingredients.selected.includes(tagsSelectableIngredientsNew[j])) {
-            let $wrapper = this._tags.createLink(tagsSelectableIngredientsNew[j], "ingredients");
+        });
+        tagsSelectableIngredientsNew.forEach(ingredient => {
+          if (!this.data.tags.ingredients.selected.includes(ingredient)) {
+            let $wrapper = this._tags.createLink(ingredient, "ingredients");
             this._tags.linkEvent($wrapper, this);
           }
-        }
-
-        /** @type {number} The number of occurrences in the ingredients data table. */
-        let tagsSelectableUstensilsNewLength = tagsSelectableUstensilsNew.length;
-        for (let j=0; j<tagsSelectableUstensilsNewLength; j++) {
-          if (!this.data.tags.ustensils.selected.includes(tagsSelectableUstensilsNew[j])) {
-            let $wrapper = this._tags.createLink(tagsSelectableUstensilsNew[j], "ustensils");
+        });
+        tagsSelectableUstensilsNew.forEach(ustensil => {
+          if (!this.data.tags.ustensils.selected.includes(ustensil)) {
+            let $wrapper = this._tags.createLink(ustensil, "ustensils");
             this._tags.linkEvent($wrapper, this);
           }
-        }
+        });
       }
-    }
+    });
   }
 
   /**
@@ -115,19 +102,15 @@ export default class result {
    * @param {array} tagsToCompare The array of new data.
    */
   getTags(tagsToAdd, tagsToCompare) { // console.log("tagsToAdd, tagsToCompare", tagsToAdd, tagsToCompare);
-
-    /** @type {number} The number of occurrences in the tagsToAdd data table. */
-    let tagsToAddLength = tagsToAdd.length;
-
-    for (let i=0; i<tagsToAddLength; i++) {
+    tagsToAdd.forEach(tag => { // console.log("tag", tag, tagsToCompare);
       /** @type {boolean} Checks the presence of keywords in the array of tags. */
-      let isInclude = tagsToCompare.includes(tagsToAdd[i]);
+      let isInclude = tagsToCompare.includes(tag);
 
       if (!isInclude) {
-        tagsToCompare.push(tagsToAdd[i]);
+        tagsToCompare.push(tag);
         tagsToCompare.sort((a, b) => a.localeCompare(b));
       }
-    }
+    });
   }
 
   /**
@@ -200,7 +183,7 @@ export default class result {
    * @returns boolean
    */
   caseTagsOnly(currentRecipe) { // console.log("caseTagsOnly", currentRecipe);
-    /** @type {array} The array of devices in the current recipe. */
+    /** @type {array} The array of appliance in the current recipe. */
     let currentAppliances = currentRecipe.appliance;
     /** @type {array} The array of selected appliances. */
     let selectedAppliances = this._tags.data.tags.appliances.selected;
@@ -208,16 +191,7 @@ export default class result {
     let hasAppliancesFilter = false;
 
     // Tests if the array contains at least one value and, if so, checks if the "appliances" tags of the current recipe are present.
-    if (selectedAppliances.length >= 1) {
-      hasAppliancesFilter = (() => {
-        /** @type {number} The number of occurrences in the selected appliances data table. */
-        let selectedAppliancesLength = selectedAppliances.length;
-
-        for (let i=0; i<selectedAppliancesLength; i++) {
-          hasAppliancesFilter = currentAppliances.includes(selectedAppliances[i]);
-        }
-      })();
-    }
+    if (selectedAppliances.length >= 1) hasAppliancesFilter = selectedAppliances.every(filter => { return currentAppliances.includes(filter); });
 
     /** @type {array} The array of ingredients in the current recipe. */
     let currentIngredients = currentRecipe.ingredients;
@@ -227,17 +201,7 @@ export default class result {
     let hasIngredientsFilter = false;
 
     // Tests if the array contains at least one value and, if so, checks if the "ingredients" tags of the current recipe are present.
-    if (selectedIngredients.length >= 1) {
-      /** @type {number} The number of occurrences in the selected ingredients data table. */
-      let selectedIngredientsLength = selectedIngredients.length;
-
-      for (let i=0; i<selectedIngredientsLength; i++) {
-        let currentIngredientsLength = currentIngredients.length;
-        for (let j=0; j<currentIngredientsLength; j++) {
-          if (currentIngredients[j].ingredient == selectedIngredients[i]) hasIngredientsFilter = true;
-        }
-      }
-    }
+    if (selectedIngredients.length >= 1) hasIngredientsFilter = selectedIngredients.every(filter => { return currentIngredients.find(current => { if (current.ingredient == filter) return true; }); });
 
     /** @type {array} The array of ustensils in the current recipe. */
     let currentUstensils = currentRecipe.ustensils;
@@ -247,16 +211,30 @@ export default class result {
     let hasUstensilsFilter = false;
 
     // Tests if the array contains at least one value and, if so, checks if the "ustensils" tags of the current recipe are present.
-    if (selectedUstensils.length >= 1) {
-      /** @type {number} The number of occurrences in the selected ustensils data table. */
-      let selectedUstensilsLength = selectedUstensils.length;
+    if (selectedUstensils.length >= 1) hasUstensilsFilter = selectedUstensils.every(filter => { return currentUstensils.includes(filter); });
 
-      for (let i=0; i<selectedUstensilsLength; i++) {
-        hasUstensilsFilter = currentUstensils.includes(selectedUstensils[i]);
-      }
-    }
+     // J'ai ma liste d'ingrédients + appareils + ustensibles de ma current recette
 
-    return hasAppliancesFilter || hasIngredientsFilter || hasUstensilsFilter ? true : false;
+     //selectedUstensils.filter((ust)=>{ return (ust == motClef)}).length >0
+     let motsClefsRecette = [];
+
+     currentUstensils.every(ust => motsClefsRecette.push(ust));
+     currentIngredients.every(ing => motsClefsRecette.push(ing.ingredient));
+     currentAppliances.every(app => motsClefsRecette.push(app));
+
+    let result = false;
+   console.log(motsClefsRecette)
+
+     motsClefsRecette.forEach( motClef =>{
+      console.log(motClef);
+
+       if( (selectedAppliances.length > 0?selectedAppliances.includes(motClef):true) & (selectedIngredients.length > 0 ? selectedIngredients.includes(motClef):true) & (selectedUstensils.length > 0? selectedUstensils.includes(motClef):true)){
+        result = true;
+       }
+
+     })
+     return result ;
+    //return hasAppliancesFilter || hasIngredientsFilter || hasUstensilsFilter ? true : false;
   }
 
   /**
@@ -280,15 +258,12 @@ export default class result {
 
     /** Retrieves the table of ingredients for the current recipe. */
     let recipeIngredients = currentRecipe.ingredients;
-    /** @type {number} The number of occurrences in the selected ustensils data table. */
-    let recipeIngredientsLength = recipeIngredients.length;
-
-    for (let i=0; i<recipeIngredientsLength; i++) {
+    recipeIngredients.forEach(ingredient => {
       /** Normalizes the current ingredient name to lowercase. */
-      let ingredientTLC = recipeIngredients[i].ingredient.toLowerCase();
+      let ingredientTLC = ingredient.ingredient.toLowerCase();
       /** Determines if the search term is in the ingredient of the current recipe. */
       if (ingredientTLC.indexOf(mainSearchTLC) >= 0) return true;
-    }
+    });
 
     return false;
   }
