@@ -275,16 +275,4 @@ export default class result {
     // Clean results list
     this.data.cssSelector.recipe.textContent = "";
   }
-
-  /**
-   * The recipe display uses the CSS grid system, it is imperative to give it the number of lines to display. We therefore update a variable in the style of the container so that the CSS styles can display the number of lines necessary.
-   * @param {object} container The container in which to update the variable
-   * @param {integer} recipeLength The number of recipes displayed
-   */
-  cssGridManager(container, recipeLength) {
-    const gridColumns = 3;
-    const gridRows = Math.ceil(recipeLength / gridColumns);
-
-    container.style.setProperty("--grid-rows", gridRows);
-  }
 }
