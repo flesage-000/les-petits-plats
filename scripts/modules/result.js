@@ -31,6 +31,8 @@ export default class result {
     const recipes = this.data.recipes;
     /** @type {number} The number of recipes available. */
     const recipesLength = recipes.length;
+    /** @type {boolean} Are there any recipes to display? */
+    let areThereRecipes = false;
 
     /** @type {array} The array that contains the new appliances can be filtered according to the results. */
     let tagsSelectableAppliancesNew = [];
@@ -69,6 +71,9 @@ export default class result {
         let resultsContainer = document.querySelector(".results");
         resultsContainer.appendChild($wrapper);
 
+        /** Changes the value of recipes to display to true. */
+        areThereRecipes = true;
+
       } // else { console.log("!!! ISN'T DISPLAYED !!!");}
 
       /** Main foreach callback. */
@@ -92,6 +97,14 @@ export default class result {
             this._tags.linkEvent($wrapper, this);
           }
         });
+
+        // If no recipe is displayed at the end of processing
+        if (!areThereRecipes) {
+          // Displays a specific message prompting the user to use other search terms.
+          let $wrapper = this._tplRecipeCard.noResult();
+          let resultsContainer = document.querySelector(".noResult");
+          resultsContainer.appendChild($wrapper);
+        }
       }
     });
   }
@@ -258,5 +271,7 @@ export default class result {
     this._tags.nodesCleaner();
     // Clean results list
     this.data.cssSelector.recipe.textContent = "";
+    // Clean no result
+    this.data.cssSelector.noResult.textContent = "";
   }
 }

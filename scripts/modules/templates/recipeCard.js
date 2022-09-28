@@ -81,4 +81,20 @@ export default class tplRecipeCard {
 
     return $ul;
   }
+
+  /**
+   * Display of a message proposing keywords, when the application finds no results to offer the user.
+   * @returns HTMLObject
+   */
+  noResult() {
+    let $wrapper = document.createElement("div");
+
+    let $content = `
+    Aucune recette ne correspond à votre critère... vous pouvez chercher &laquo; tarte aux pommes &raquo;, &laquo; poisson &raquo;, etc.
+    `;
+
+    $wrapper.innerHTML = $content;
+
+    return $wrapper;
+  }
 }

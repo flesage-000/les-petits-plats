@@ -63,7 +63,8 @@ class main {
           "ingredients": document.querySelector(".ingredients .row"),
           "ustensils": document.querySelector(".ustensils .row")
         },
-        "recipe": document.querySelector(".results")
+        "recipe": document.querySelector(".results"),
+        "noResult": document.querySelector(".noResult")
       },
       "manualSearch": null,
       "tags": {
