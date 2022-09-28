@@ -93,7 +93,7 @@ class main {
   }
 }
 
-console.log("!!! NATIVE CODE VERSION !!!\r\n - JSBen.ch => https://jsben.ch/PS2ym");
+console.log("!!! NATIVE CODE VERSION !!!\r\n - JSBen.ch => https://jsben.ch/CoFqZ ");
 
 const _main = new main(data);
 _main.init();
