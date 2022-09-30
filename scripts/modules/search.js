@@ -22,12 +22,16 @@ export default class search {
     const eventFunction = function (ev) {
       let _utils = new utils();
       /** @type {(boolean|string)} The value of the input. If the script cannot continue its value will be "false" otherwise it contains the user's search terms. */
-      let searchIsValid = _utils.checkInputValue(ev.target.value);
+      let searchIsValid = _utils.checkInputValue(ev.target.value); console.log("searchIsValid", searchIsValid);
 
       /** Determines if the conditions are sufficient to continue the script. */
       if (searchIsValid === false) {
-        /** Resets the value to null in the global data object. */
-        result.data.manualSearch = null;
+        if (result.data.manualSearch != null) {
+          /** Resets the value to null in the global data object. */
+          result.data.manualSearch = null;
+          /** Relaunch search results. */
+          result.parser();
+        }
         // console.log("!! Invalid search value !!", result.data.manualSearch);
         /** Stop the script. */
         return;
