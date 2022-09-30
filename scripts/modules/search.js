@@ -22,7 +22,7 @@ export default class search {
     const eventFunction = function (ev) {
       let _utils = new utils();
       /** @type {(boolean|string)} The value of the input. If the script cannot continue its value will be "false" otherwise it contains the user's search terms. */
-      let searchIsValid = _utils.checkInputValue(ev.target.value); console.log("searchIsValid", searchIsValid);
+      let searchIsValid = _utils.checkInputValue(ev.target.value);
 
       /** Determines if the conditions are sufficient to continue the script. */
       if (searchIsValid === false) {
