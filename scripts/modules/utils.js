@@ -19,9 +19,7 @@ export default class utils {
     let value = "";
     let elementStyle = element.style;
 
-    if(elementStyle.display !== "none") {
-      value = "none";
-    }
+    if(elementStyle.display !== "none") value = "none";
 
     elementStyle.display = value;
   }

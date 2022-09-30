@@ -225,10 +225,6 @@ export default class result {
 
     // Tests if the array contains at least one value and, if so, checks if the "ustensils" tags of the current recipe are present.
     if (selectedUstensils.length >= 1) hasUstensilsFilter = selectedUstensils.every(filter => { return currentUstensils.includes(filter); });
-
-     // J'ai ma liste d'ingrédients + appareils + ustensibles de ma current recette
-
-     //selectedUstensils.filter((ust)=>{ return (ust == motClef)}).length >0
      let motsClefsRecette = [];
 
      currentUstensils.every(ust => motsClefsRecette.push(ust));
@@ -236,10 +232,8 @@ export default class result {
      currentAppliances.every(app => motsClefsRecette.push(app));
 
     let result = false;
-   console.log(motsClefsRecette)
 
      motsClefsRecette.forEach( motClef =>{
-      console.log(motClef);
 
        if( (selectedAppliances.length > 0?selectedAppliances.includes(motClef):true) & (selectedIngredients.length > 0 ? selectedIngredients.includes(motClef):true) & (selectedUstensils.length > 0? selectedUstensils.includes(motClef):true)){
         result = true;
@@ -247,7 +241,6 @@ export default class result {
 
      })
      return result ;
-    //return hasAppliancesFilter || hasIngredientsFilter || hasUstensilsFilter ? true : false;
   }
 
   /**
