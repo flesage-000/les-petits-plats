@@ -250,15 +250,15 @@ export default class result {
    * @returns boolean
    */
   caseMainSearchOnly(currentRecipe, mainSearch) { // console.log("caseMainSearchOnly", currentRecipe, mainSearch);
-    let mainSearchTLC = mainSearch.toLowerCase();
+    let mainSearchTLC = mainSearch.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 
     /** Normalizes the current recipe name to lowercase. */
-    let recipeNameTLC = currentRecipe.name.toLowerCase();
+    let recipeNameTLC = currentRecipe.name.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
     /** Determines if the search term is in the name of the current recipe. */
     if (recipeNameTLC.indexOf(mainSearchTLC) >= 0) return true;
 
     /** Normalizes the current recipe description to lowercase. */
-    let recipeDescriptionTLC = currentRecipe.description.toLowerCase();
+    let recipeDescriptionTLC = currentRecipe.description.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
     /** Determines if the search term is in the description of the current recipe. */
     if (recipeDescriptionTLC.indexOf(mainSearchTLC) >= 0)  return true;
 
@@ -266,7 +266,7 @@ export default class result {
     let recipeIngredients = currentRecipe.ingredients;
     recipeIngredients.forEach(ingredient => {
       /** Normalizes the current ingredient name to lowercase. */
-      let ingredientTLC = ingredient.ingredient.toLowerCase();
+      let ingredientTLC = ingredient.ingredient.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
       /** Determines if the search term is in the ingredient of the current recipe. */
       if (ingredientTLC.indexOf(mainSearchTLC) >= 0) return true;
     });

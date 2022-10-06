@@ -35,7 +35,7 @@ export default class utils {
       /** @type {string} Remove leading and trailing spaces. */
       let valueTrim = value.trim();
       /** @type {string} Remove leading and trailing spaces. */
-      let valueTrimTLC = valueTrim.toLowerCase();
+      let valueTrimTLC = valueTrim.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 
       return valueTrimTLC;
     };

@@ -79,7 +79,7 @@ export default class tags {
 
     /** Loop to display or not the tags. */
     for (let i=0;i<tagsLength; i++) {
-      if (tags[i].dataset.tagName.toLowerCase().includes(valueToSearch) || reset) {
+      if (tags[i].dataset.tagName.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(valueToSearch.normalize("NFD").replace(/[\u0300-\u036f]/g, "")) || reset) {
         tags[i].parentNode.style.display = "";
       } else {
         tags[i].parentNode.style.display = "none";
