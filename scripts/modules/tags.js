@@ -77,7 +77,7 @@ export default class tags {
 
     /** Loop to display or not the tags. */
     tags.forEach(tag => {
-      if (tag.dataset.tagName.toLowerCase().includes(valueToSearch) || reset) {
+      if (tag.dataset.tagName.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(valueToSearch.normalize("NFD").replace(/[\u0300-\u036f]/g, "")) || reset) {
         tag.parentNode.style.display = "";
       } else {
         tag.parentNode.style.display = "none";
