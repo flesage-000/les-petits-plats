@@ -28,9 +28,9 @@ export default class result {
     this.nodesCleaner();
 
     /** @type {object} The object containing all unfiltered recipes. */
-    const recipes = this.data.recipes;
+    let recipes = this.data.recipes;
     /** @type {number} The number of recipes available. */
-    const recipesLength = recipes.length;
+    let recipesLength = recipes.length;
     /** @type {boolean} Are there any recipes to display? */
     let areThereRecipes = false;
 
@@ -44,30 +44,34 @@ export default class result {
     let tagsSelectableUstensilsNew = [];
 
     /** Parse all recipes */
-    recipes.forEach((currentRecipe, key) => { // console.log("recipe, key", recipe, key);
+    for (let i=0; i<recipesLength; i++) { // console.log("recipes[i], i", recipes[i], i);
 
-      // if (key == 0) { console.log("!!! TRAITEMENT COMMENCEE !!!\r\nNouveaux Appliance: ", tagsSelectableAppliancesNew, "\r\nNouveaux Ingredients: ", tagsSelectableIngredientsNew, "\r\nNouveaux Ustensils: ", tagsSelectableUstensilsNew);}
+      // if (i == 0) { console.log("!!! TRAITEMENT COMMENCEE !!!\r\nNouveaux Appliance: ", tagsSelectableAppliancesNew, "\r\nNouveaux Ingredients: ", tagsSelectableIngredientsNew, "\r\nNouveaux Ustensils: ", tagsSelectableUstensilsNew);}
 
       /** @type {boolean} Determines whether the current recipe is displayable according to its appliances. */
-      let currentRecipeIsDisplayable = this.recipeIsDisplayable(currentRecipe);
+      let currentRecipeIsDisplayable = this.recipeIsDisplayable(recipes[i]);
 
       if (currentRecipeIsDisplayable) { // console.log("!!! IS DISPLAY !!!\r\n - currentRecipeIsDisplayable", currentRecipeIsDisplayable, "\r\n - this.data.tags", this.data.tags);
         /** Retrieves the devices from the current recipe and adds it to an array if it isn't already there. */
-        this.getTags(currentRecipe.appliance, tagsSelectableAppliancesNew, this.data.tags.appliances.selected);
-
+        this.getTags(recipes[i].appliance, tagsSelectableAppliancesNew, this.data.tags.appliances.selected);
+        /** @type {array} The array of ingredients list. */
         let ingredientList = [];
-        // Because the ingredients are in separate objects, you have to extract them and put them in an array.
-        currentRecipe.ingredients.forEach(Ingredientdata => { // console.log("ingredientData", Ingredientdata.ingredient);
+        /** @type {array} The array of current ingredients list. */
+        let currentIngredients = recipes[i].ingredients;
+        /** @type {number} The length array of current ingredients list. */
+        let currentIngredientsLength = currentIngredients.length;
+
+        for (let j=0; j<currentIngredientsLength; j++) {
           /**
            * Retrieves the ingredients from the current recipe and adds it to an array if it isn't already there.
            */
-          ingredientList.push(Ingredientdata.ingredient);
-        });
+          ingredientList.push(currentIngredients[j].ingredient);
+        }
         this.getTags(ingredientList, tagsSelectableIngredientsNew, this.data.tags.ingredients.selected);
         /** Retrieves the ustensils from the current recipe and adds it to an array if it isn't already there. */
-        this.getTags(currentRecipe.ustensils, tagsSelectableUstensilsNew, this.data.tags.ustensils.selected);
+        this.getTags(recipes[i].ustensils, tagsSelectableUstensilsNew, this.data.tags.ustensils.selected);
 
-        let $wrapper = this._tplRecipeCard.card(currentRecipe);
+        let $wrapper = this._tplRecipeCard.card(recipes[i]);
         let resultsContainer = document.querySelector(".results");
         resultsContainer.appendChild($wrapper);
 
@@ -76,27 +80,36 @@ export default class result {
 
       } // else { console.log("!!! ISN'T DISPLAYED !!!");}
 
-      /** Main foreach callback. */
-      if (recipesLength - 1 == key) { // console.log("!!! TRAITEMENT TERMINEE !!!\r\n- Nouveaux Appliance: ", tagsSelectableAppliancesNew, "\r\n- Nouveaux Ingredients: ", tagsSelectableIngredientsNew, "\r\n- Nouveaux Ustensils: ", tagsSelectableUstensilsNew);
+      /** Main loop callback. */
+      if (recipesLength - 1 == i) { // console.log("!!! TRAITEMENT TERMINEE !!!\r\n- Nouveaux Appliance: ", tagsSelectableAppliancesNew, "\r\n- Nouveaux Ingredients: ", tagsSelectableIngredientsNew, "\r\n- Nouveaux Ustensils: ", tagsSelectableUstensilsNew);
+
+        /** @type {number} The number of occurrences in the appliances data table. */
+        let tagsSelectableAppliancesNewLength = tagsSelectableAppliancesNew.length;
         /** Builds the buttons of the tags to select. */
-        tagsSelectableAppliancesNew.forEach(appliance => {
-          if (!this.data.tags.appliances.selected.includes(appliance)) {
-            let $wrapper = this._tags.createLink(appliance, "appliances");
+        for (let j=0; j<tagsSelectableAppliancesNewLength; j++) {
+          if (!this.data.tags.appliances.selected.includes(tagsSelectableAppliancesNew[j])) {
+            let $wrapper = this._tags.createLink(tagsSelectableAppliancesNew[j], "appliances");
             this._tags.linkEvent($wrapper, this);
           }
-        });
-        tagsSelectableIngredientsNew.forEach(ingredient => {
-          if (!this.data.tags.ingredients.selected.includes(ingredient)) {
-            let $wrapper = this._tags.createLink(ingredient, "ingredients");
+        }
+
+        /** @type {number} The number of occurrences in the ingredients data table. */
+        let tagsSelectableIngredientsNewLength = tagsSelectableIngredientsNew.length;
+        for (let j=0; j<tagsSelectableIngredientsNewLength; j++) {
+          if (!this.data.tags.ingredients.selected.includes(tagsSelectableIngredientsNew[j])) {
+            let $wrapper = this._tags.createLink(tagsSelectableIngredientsNew[j], "ingredients");
             this._tags.linkEvent($wrapper, this);
           }
-        });
-        tagsSelectableUstensilsNew.forEach(ustensil => {
-          if (!this.data.tags.ustensils.selected.includes(ustensil)) {
-            let $wrapper = this._tags.createLink(ustensil, "ustensils");
+        }
+
+        /** @type {number} The number of occurrences in the ingredients data table. */
+        let tagsSelectableUstensilsNewLength = tagsSelectableUstensilsNew.length;
+        for (let j=0; j<tagsSelectableUstensilsNewLength; j++) {
+          if (!this.data.tags.ustensils.selected.includes(tagsSelectableUstensilsNew[j])) {
+            let $wrapper = this._tags.createLink(tagsSelectableUstensilsNew[j], "ustensils");
             this._tags.linkEvent($wrapper, this);
           }
-        });
+        }
 
         // If no recipe is displayed at the end of processing
         if (!areThereRecipes) {
@@ -106,7 +119,7 @@ export default class result {
           resultsContainer.appendChild($wrapper);
         }
       }
-    });
+    }
   }
 
   /**
@@ -115,15 +128,19 @@ export default class result {
    * @param {array} tagsToCompare The array of new data.
    */
   getTags(tagsToAdd, tagsToCompare) { // console.log("tagsToAdd, tagsToCompare", tagsToAdd, tagsToCompare);
-    tagsToAdd.forEach(tag => { // console.log("tag", tag, tagsToCompare);
+
+    /** @type {number} The number of occurrences in the tagsToAdd data table. */
+    let tagsToAddLength = tagsToAdd.length;
+
+    for (let i=0; i<tagsToAddLength; i++) {
       /** @type {boolean} Checks the presence of keywords in the array of tags. */
-      let isInclude = tagsToCompare.includes(tag);
+      let isInclude = tagsToCompare.includes(tagsToAdd[i]);
 
       if (!isInclude) {
-        tagsToCompare.push(tag);
+        tagsToCompare.push(tagsToAdd[i]);
         tagsToCompare.sort((a, b) => a.localeCompare(b));
       }
-    });
+    }
   }
 
   /**
@@ -196,51 +213,42 @@ export default class result {
    * @returns boolean
    */
   caseTagsOnly(currentRecipe) { // console.log("caseTagsOnly", currentRecipe);
+    /** @type {number} The number of selected tags. */
+    let countThemeTagSelected = 0;
+    /** @type {array} Array containing the boolean for each type of tag and which will authorize or not the display of the recipe. */
+    let resultBool = [];
+
     /** @type {array} The array of appliance in the current recipe. */
     let currentAppliances = currentRecipe.appliance;
     /** @type {array} The array of selected appliances. */
     let selectedAppliances = this._tags.data.tags.appliances.selected;
-    /** @type {boolean} The boolean determining if the current recipe contains the selected appliances or not. Default value "false". */
-    let hasAppliancesFilter = false;
-
     // Tests if the array contains at least one value and, if so, checks if the "appliances" tags of the current recipe are present.
-    if (selectedAppliances.length >= 1) hasAppliancesFilter = selectedAppliances.every(filter => { return currentAppliances.includes(filter); });
+    if (selectedAppliances.length >= 1) {
+     resultBool.push(selectedAppliances.every(filter => { return currentAppliances.includes(filter); }))
+      countThemeTagSelected ++;
+    }
 
     /** @type {array} The array of ingredients in the current recipe. */
     let currentIngredients = currentRecipe.ingredients;
     /** @type {array} The array of selected ingredients. */
     let selectedIngredients = this._tags.data.tags.ingredients.selected;
-    /** @type {boolean} The boolean determining if the current recipe contains the selected ingredients or not. Default value "false". */
-    let hasIngredientsFilter = false;
-
     // Tests if the array contains at least one value and, if so, checks if the "ingredients" tags of the current recipe are present.
-    if (selectedIngredients.length >= 1) hasIngredientsFilter = selectedIngredients.every(filter => { return currentIngredients.find(current => { if (current.ingredient == filter) return true; }); });
+    if (selectedIngredients.length >= 1) {
+      resultBool.push(selectedIngredients.every(filter => { return currentIngredients.find(current => { if (current.ingredient == filter) return true; }); }))
+      countThemeTagSelected ++;
+    }
 
     /** @type {array} The array of ustensils in the current recipe. */
     let currentUstensils = currentRecipe.ustensils;
     /** @type {array} The array of selected ustensils. */
     let selectedUstensils = this._tags.data.tags.ustensils.selected
-    /** @type {boolean} The boolean determining if the current recipe contains the selected ustensils or not. Default value "false". */
-    let hasUstensilsFilter = false;
-
     // Tests if the array contains at least one value and, if so, checks if the "ustensils" tags of the current recipe are present.
-    if (selectedUstensils.length >= 1) hasUstensilsFilter = selectedUstensils.every(filter => { return currentUstensils.includes(filter); });
-     let motsClefsRecette = [];
+    if (selectedUstensils.length >= 1) {
+      resultBool.push(selectedUstensils.every(filter => { return currentUstensils.includes(filter); }));
+      countThemeTagSelected++;
+    }
 
-     currentUstensils.every(ust => motsClefsRecette.push(ust));
-     currentIngredients.every(ing => motsClefsRecette.push(ing.ingredient));
-     currentAppliances.every(app => motsClefsRecette.push(app));
-
-    let result = false;
-
-     motsClefsRecette.forEach( motClef =>{
-
-       if( (selectedAppliances.length > 0?selectedAppliances.includes(motClef):true) & (selectedIngredients.length > 0 ? selectedIngredients.includes(motClef):true) & (selectedUstensils.length > 0? selectedUstensils.includes(motClef):true)){
-        result = true;
-       }
-
-     })
-     return result ;
+    return resultBool.filter(filt => filt==true).length == countThemeTagSelected;
   }
 
   /**
@@ -264,12 +272,15 @@ export default class result {
 
     /** Retrieves the table of ingredients for the current recipe. */
     let recipeIngredients = currentRecipe.ingredients;
-    recipeIngredients.forEach(ingredient => {
+    /** @type {number} The number of occurrences in the selected ustensils data table. */
+    let recipeIngredientsLength = recipeIngredients.length;
+
+    for (let i=0; i<recipeIngredientsLength; i++) {
       /** Normalizes the current ingredient name to lowercase. */
-      let ingredientTLC = ingredient.ingredient.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+      let ingredientTLC = recipeIngredients[i].ingredient.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
       /** Determines if the search term is in the ingredient of the current recipe. */
       if (ingredientTLC.indexOf(mainSearchTLC) >= 0) return true;
-    });
+    }
 
     return false;
   }
